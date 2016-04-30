@@ -27,6 +27,12 @@ type SummonerChampChestData struct {
 	Required: true
 	*/
 	ChestIsAvailable *bool `json:"chestIsAvailable"`
+
+	/* highest grade
+
+	Required: true
+	*/
+	HighestGrade *string `json:"highestGrade"`
 }
 
 // Validate validates this summoner champ chest data
@@ -39,6 +45,11 @@ func (m *SummonerChampChestData) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateChestIsAvailable(formats); err != nil {
+		// prop
+		res = append(res, err)
+	}
+
+	if err := m.validateHighestGrade(formats); err != nil {
 		// prop
 		res = append(res, err)
 	}
@@ -61,6 +72,15 @@ func (m *SummonerChampChestData) validateChampID(formats strfmt.Registry) error 
 func (m *SummonerChampChestData) validateChestIsAvailable(formats strfmt.Registry) error {
 
 	if err := validate.Required("chestIsAvailable", "body", m.ChestIsAvailable); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *SummonerChampChestData) validateHighestGrade(formats strfmt.Registry) error {
+
+	if err := validate.Required("highestGrade", "body", m.HighestGrade); err != nil {
 		return err
 	}
 
