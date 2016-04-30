@@ -25,9 +25,7 @@ paths:
         '200':
           description: all champion static data
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/ChampionListDto"
+            $ref: "#/definitions/ChampionListDto"
 securityDefinitions:
   apiKey:
     type: apiKey

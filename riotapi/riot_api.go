@@ -28,5 +28,15 @@ func NewRiotApi(apiKey string) RiotApi {
 
 func (api *riotAPI) GetChampionData() []*models.ChampionData {
 	params := operations.NewGetChampionDataParams().WithRegion(defaultRegion)
-	data, err := client.Default.Operations.GetChampionData(params, api.auth)
+	data, _ := client.Default.Operations.GetChampionData(params, api.auth)
+	var champions []*models.ChampionData
+
+	for _, champ := range data.Payload.Data {
+		champions = append(champions, &models.ChampionData{
+			IconURL: champ.Image.Full,
+			ID:      champ.ID,
+			Name:    champ.Name,
+		})
+	}
+	return champions
 }

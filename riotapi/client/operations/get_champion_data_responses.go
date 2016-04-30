@@ -45,7 +45,7 @@ func NewGetChampionDataOK() *GetChampionDataOK {
 all champion static data
 */
 type GetChampionDataOK struct {
-	Payload []*models.ChampionListDto
+	Payload *models.ChampionListDto
 }
 
 func (o *GetChampionDataOK) Error() string {
@@ -54,8 +54,10 @@ func (o *GetChampionDataOK) Error() string {
 
 func (o *GetChampionDataOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(models.ChampionListDto)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
