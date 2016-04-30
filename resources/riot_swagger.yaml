@@ -28,6 +28,13 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/ChampionListDto"
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    name: api_key
+    in: query
+security:
+  - apiKey: []
 definitions:
   ChampionListDto:
     type: object
@@ -60,3 +67,6 @@ definitions:
     type: object
     required:
       - full
+    properties:
+      full:
+        type: string

@@ -41,6 +41,10 @@
 			"Rev": "499b9bceffc59518b28ff84e0717692883137578"
 		},
 		{
+			"ImportPath": "github.com/go-openapi/runtime/client",
+			"Rev": "499b9bceffc59518b28ff84e0717692883137578"
+		},
+		{
 			"ImportPath": "github.com/go-openapi/runtime/middleware",
 			"Rev": "499b9bceffc59518b28ff84e0717692883137578"
 		},
@@ -90,6 +94,14 @@
 			"ImportPath": "github.com/tylerb/graceful",
 			"Comment": "v1.2.5",
 			"Rev": "9a3d4236b03bb5d26f7951134d248f9d5510d599"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "1aafd77e1e7f6849ad16a7bdeb65e3589a10b2bb"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context/ctxhttp",
+			"Rev": "1aafd77e1e7f6849ad16a7bdeb65e3589a10b2bb"
 		},
 		{
 			"ImportPath": "golang.org/x/net/netutil",
