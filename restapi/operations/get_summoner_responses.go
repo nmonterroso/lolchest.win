@@ -48,6 +48,24 @@ func (o *GetSummonerOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	}
 }
 
+/*GetSummonerInternalServerError unexpected error
+
+swagger:response getSummonerInternalServerError
+*/
+type GetSummonerInternalServerError struct {
+}
+
+// NewGetSummonerInternalServerError creates GetSummonerInternalServerError with default headers values
+func NewGetSummonerInternalServerError() *GetSummonerInternalServerError {
+	return &GetSummonerInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetSummonerInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+}
+
 /*GetSummonerBadGateway invalid response from riot api
 
 swagger:response getSummonerBadGateway

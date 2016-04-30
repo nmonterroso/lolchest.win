@@ -23,6 +23,8 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/ChampionData"
+        '500':
+          description: unexpected error
         '502':
           description: invalid response from riot api
   /summoner/{name}:
@@ -47,6 +49,8 @@ paths:
           description: summoner data
           schema:
             $ref: '#/definitions/Summoner'
+        '500':
+          description: unexpected error
         '502':
           description: invalid response from riot api
 definitions:

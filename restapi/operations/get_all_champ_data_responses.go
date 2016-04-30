@@ -47,6 +47,24 @@ func (o *GetAllChampDataOK) WriteResponse(rw http.ResponseWriter, producer runti
 
 }
 
+/*GetAllChampDataInternalServerError unexpected error
+
+swagger:response getAllChampDataInternalServerError
+*/
+type GetAllChampDataInternalServerError struct {
+}
+
+// NewGetAllChampDataInternalServerError creates GetAllChampDataInternalServerError with default headers values
+func NewGetAllChampDataInternalServerError() *GetAllChampDataInternalServerError {
+	return &GetAllChampDataInternalServerError{}
+}
+
+// WriteResponse to the client
+func (o *GetAllChampDataInternalServerError) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(500)
+}
+
 /*GetAllChampDataBadGateway invalid response from riot api
 
 swagger:response getAllChampDataBadGateway

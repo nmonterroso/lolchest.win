@@ -1,6 +1,7 @@
 package operations
 
 import (
+	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/nmonterroso/lolchest.win/riotapi"
 )
@@ -16,5 +17,16 @@ func NewGetAllChampDataHandler(bridge riotapi.RiotApiBridge) GetAllChampDataHand
 }
 
 func (h *getAllChampDataHandler) Handle() middleware.Responder {
-	return NewGetAllChampDataOK().WithPayload(h.bridge.GetChampionData())
+	champData, err := h.bridge.GetChampionData()
+
+	if err != nil {
+		switch err.(type) {
+		case *runtime.APIError:
+			return NewGetAllChampDataBadGateway()
+		default:
+			return NewGetAllChampDataInternalServerError()
+		}
+	}
+
+	return NewGetAllChampDataOK().WithPayload(champData)
 }
