@@ -25,9 +25,7 @@ func configureAPI(api *operations.LolchestWinAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.GetAllChampDataHandler = operations.GetAllChampDataHandlerFunc(func() middleware.Responder {
-		return middleware.NotImplemented("operation .GetAllChampData has not yet been implemented")
-	})
+	api.GetAllChampDataHandler = operations.GetAllChampDataHandler()
 	api.GetSummonerHandler = operations.GetSummonerHandlerFunc(func(params operations.GetSummonerParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetSummoner has not yet been implemented")
 	})

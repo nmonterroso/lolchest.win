@@ -1,0 +1,62 @@
+swagger: '2.0'
+info:
+  title: Riot API
+  description: Riot API (for lolchest)
+  version: 1.0.0
+host: global.api.pvp.net
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+paths:
+  /api/lol/static-data/{region}/v1.2/champion:
+    get:
+      operationId: getChampionData
+      summary: get static champion data
+      produces:
+        - application/json
+      parameters:
+        - name: region
+          type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          description: all champion static data
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ChampionListDto"
+definitions:
+  ChampionListDto:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        type: object
+        additionalProperties:
+          $ref: "#/definitions/ChampionDto"
+  ChampionDto:
+    type: object
+    required:
+      - id
+      - name
+      - title
+      - image
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      title:
+        type: string
+      image:
+        type: object
+        $ref: "#/definitions/ImageDto"
+  ImageDto:
+    type: object
+    required:
+      - full
