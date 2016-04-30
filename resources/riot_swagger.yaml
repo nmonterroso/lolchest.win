@@ -33,6 +33,17 @@ paths:
           description: all champion static data
           schema:
             $ref: "#/definitions/ChampionListDto"
+        '429':
+          description: rate limit exceeded
+          headers:
+            x-retry-after:
+              type: integer
+              format: int32
+              description: the number of seconds to wait until retrying
+        '500':
+          description: internal server error
+        '503':
+          description: service unavailable
   /api/lol/static-data/{region}/v1.2/versions:
     get:
       operationId: getStaticAssetVersions
@@ -52,6 +63,17 @@ paths:
             type: array
             items:
               type: string
+        '429':
+          description: rate limit exceeded
+          headers:
+            x-retry-after:
+              type: integer
+              format: int32
+              description: the number of seconds to wait until retrying
+        '500':
+          description: internal server error
+        '503':
+          description: service unavailable
   /api/lol/{region}/v1.4/summoner/by-name/{summonerNames}:
     get:
       operationId: getSummonerProfile
@@ -75,6 +97,19 @@ paths:
             type: object
             additionalProperties:
               $ref: "#/definitions/SummonerDto"
+        '404':
+          description: summoner id or platform id not found
+        '429':
+          description: rate limit exceeded
+          headers:
+            x-retry-after:
+              type: integer
+              format: int32
+              description: the number of seconds to wait until retrying
+        '500':
+          description: internal server error
+        '503':
+          description: service unavailable
   /championmastery/location/{platformId}/player/{summonerId}/champions:
     get:
       operationId: getSummonerChampionMastery
@@ -99,6 +134,17 @@ paths:
             type: array
             items:
               $ref: "#/definitions/ChampionMasteryDto"
+        '404':
+          description: summoner id or platform id not found
+        '429':
+          description: rate limit exceeded
+          headers:
+            x-retry-after:
+              type: integer
+              format: int32
+              description: the number of seconds to wait until retrying
+        '500':
+          description: internal server error
 securityDefinitions:
   apiKey:
     type: apiKey

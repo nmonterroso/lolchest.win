@@ -7,7 +7,9 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -29,6 +31,27 @@ func (o *GetChampionDataReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+
+	case 429:
+		result := NewGetChampionDataTooManyRequests()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
+	case 500:
+		result := NewGetChampionDataInternalServerError()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
+	case 503:
+		result := NewGetChampionDataServiceUnavailable()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -60,6 +83,79 @@ func (o *GetChampionDataOK) readResponse(response runtime.ClientResponse, consum
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewGetChampionDataTooManyRequests creates a GetChampionDataTooManyRequests with default headers values
+func NewGetChampionDataTooManyRequests() *GetChampionDataTooManyRequests {
+	return &GetChampionDataTooManyRequests{}
+}
+
+/*GetChampionDataTooManyRequests handles this case with default header values.
+
+rate limit exceeded
+*/
+type GetChampionDataTooManyRequests struct {
+	/*the number of seconds to wait until retrying
+	 */
+	XRetryAfter int32
+}
+
+func (o *GetChampionDataTooManyRequests) Error() string {
+	return fmt.Sprintf("[GET /api/lol/static-data/{region}/v1.2/champion][%d] getChampionDataTooManyRequests ", 429)
+}
+
+func (o *GetChampionDataTooManyRequests) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response header x-retry-after
+	xRetryAfter, err := swag.ConvertInt32(response.GetHeader("x-retry-after"))
+	if err != nil {
+		return errors.InvalidType("x-retry-after", "header", "int32", response.GetHeader("x-retry-after"))
+	}
+	o.XRetryAfter = xRetryAfter
+
+	return nil
+}
+
+// NewGetChampionDataInternalServerError creates a GetChampionDataInternalServerError with default headers values
+func NewGetChampionDataInternalServerError() *GetChampionDataInternalServerError {
+	return &GetChampionDataInternalServerError{}
+}
+
+/*GetChampionDataInternalServerError handles this case with default header values.
+
+internal server error
+*/
+type GetChampionDataInternalServerError struct {
+}
+
+func (o *GetChampionDataInternalServerError) Error() string {
+	return fmt.Sprintf("[GET /api/lol/static-data/{region}/v1.2/champion][%d] getChampionDataInternalServerError ", 500)
+}
+
+func (o *GetChampionDataInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewGetChampionDataServiceUnavailable creates a GetChampionDataServiceUnavailable with default headers values
+func NewGetChampionDataServiceUnavailable() *GetChampionDataServiceUnavailable {
+	return &GetChampionDataServiceUnavailable{}
+}
+
+/*GetChampionDataServiceUnavailable handles this case with default header values.
+
+service unavailable
+*/
+type GetChampionDataServiceUnavailable struct {
+}
+
+func (o *GetChampionDataServiceUnavailable) Error() string {
+	return fmt.Sprintf("[GET /api/lol/static-data/{region}/v1.2/champion][%d] getChampionDataServiceUnavailable ", 503)
+}
+
+func (o *GetChampionDataServiceUnavailable) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }

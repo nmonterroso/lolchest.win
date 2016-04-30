@@ -7,7 +7,9 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -29,6 +31,27 @@ func (o *GetSummonerChampionMasteryReader) ReadResponse(response runtime.ClientR
 			return nil, err
 		}
 		return result, nil
+
+	case 404:
+		result := NewGetSummonerChampionMasteryNotFound()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
+	case 429:
+		result := NewGetSummonerChampionMasteryTooManyRequests()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
+	case 500:
+		result := NewGetSummonerChampionMasteryInternalServerError()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -58,6 +81,79 @@ func (o *GetSummonerChampionMasteryOK) readResponse(response runtime.ClientRespo
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewGetSummonerChampionMasteryNotFound creates a GetSummonerChampionMasteryNotFound with default headers values
+func NewGetSummonerChampionMasteryNotFound() *GetSummonerChampionMasteryNotFound {
+	return &GetSummonerChampionMasteryNotFound{}
+}
+
+/*GetSummonerChampionMasteryNotFound handles this case with default header values.
+
+summoner id or platform id not found
+*/
+type GetSummonerChampionMasteryNotFound struct {
+}
+
+func (o *GetSummonerChampionMasteryNotFound) Error() string {
+	return fmt.Sprintf("[GET /championmastery/location/{platformId}/player/{summonerId}/champions][%d] getSummonerChampionMasteryNotFound ", 404)
+}
+
+func (o *GetSummonerChampionMasteryNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewGetSummonerChampionMasteryTooManyRequests creates a GetSummonerChampionMasteryTooManyRequests with default headers values
+func NewGetSummonerChampionMasteryTooManyRequests() *GetSummonerChampionMasteryTooManyRequests {
+	return &GetSummonerChampionMasteryTooManyRequests{}
+}
+
+/*GetSummonerChampionMasteryTooManyRequests handles this case with default header values.
+
+rate limit exceeded
+*/
+type GetSummonerChampionMasteryTooManyRequests struct {
+	/*the number of seconds to wait until retrying
+	 */
+	XRetryAfter int32
+}
+
+func (o *GetSummonerChampionMasteryTooManyRequests) Error() string {
+	return fmt.Sprintf("[GET /championmastery/location/{platformId}/player/{summonerId}/champions][%d] getSummonerChampionMasteryTooManyRequests ", 429)
+}
+
+func (o *GetSummonerChampionMasteryTooManyRequests) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response header x-retry-after
+	xRetryAfter, err := swag.ConvertInt32(response.GetHeader("x-retry-after"))
+	if err != nil {
+		return errors.InvalidType("x-retry-after", "header", "int32", response.GetHeader("x-retry-after"))
+	}
+	o.XRetryAfter = xRetryAfter
+
+	return nil
+}
+
+// NewGetSummonerChampionMasteryInternalServerError creates a GetSummonerChampionMasteryInternalServerError with default headers values
+func NewGetSummonerChampionMasteryInternalServerError() *GetSummonerChampionMasteryInternalServerError {
+	return &GetSummonerChampionMasteryInternalServerError{}
+}
+
+/*GetSummonerChampionMasteryInternalServerError handles this case with default header values.
+
+internal server error
+*/
+type GetSummonerChampionMasteryInternalServerError struct {
+}
+
+func (o *GetSummonerChampionMasteryInternalServerError) Error() string {
+	return fmt.Sprintf("[GET /championmastery/location/{platformId}/player/{summonerId}/champions][%d] getSummonerChampionMasteryInternalServerError ", 500)
+}
+
+func (o *GetSummonerChampionMasteryInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }

@@ -7,7 +7,9 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -27,6 +29,27 @@ func (o *GetStaticAssetVersionsReader) ReadResponse(response runtime.ClientRespo
 			return nil, err
 		}
 		return result, nil
+
+	case 429:
+		result := NewGetStaticAssetVersionsTooManyRequests()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
+	case 500:
+		result := NewGetStaticAssetVersionsInternalServerError()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
+
+	case 503:
+		result := NewGetStaticAssetVersionsServiceUnavailable()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 
 	default:
 		return nil, runtime.NewAPIError("unknown error", response, response.Code())
@@ -56,6 +79,79 @@ func (o *GetStaticAssetVersionsOK) readResponse(response runtime.ClientResponse,
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
+
+	return nil
+}
+
+// NewGetStaticAssetVersionsTooManyRequests creates a GetStaticAssetVersionsTooManyRequests with default headers values
+func NewGetStaticAssetVersionsTooManyRequests() *GetStaticAssetVersionsTooManyRequests {
+	return &GetStaticAssetVersionsTooManyRequests{}
+}
+
+/*GetStaticAssetVersionsTooManyRequests handles this case with default header values.
+
+rate limit exceeded
+*/
+type GetStaticAssetVersionsTooManyRequests struct {
+	/*the number of seconds to wait until retrying
+	 */
+	XRetryAfter int32
+}
+
+func (o *GetStaticAssetVersionsTooManyRequests) Error() string {
+	return fmt.Sprintf("[GET /api/lol/static-data/{region}/v1.2/versions][%d] getStaticAssetVersionsTooManyRequests ", 429)
+}
+
+func (o *GetStaticAssetVersionsTooManyRequests) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response header x-retry-after
+	xRetryAfter, err := swag.ConvertInt32(response.GetHeader("x-retry-after"))
+	if err != nil {
+		return errors.InvalidType("x-retry-after", "header", "int32", response.GetHeader("x-retry-after"))
+	}
+	o.XRetryAfter = xRetryAfter
+
+	return nil
+}
+
+// NewGetStaticAssetVersionsInternalServerError creates a GetStaticAssetVersionsInternalServerError with default headers values
+func NewGetStaticAssetVersionsInternalServerError() *GetStaticAssetVersionsInternalServerError {
+	return &GetStaticAssetVersionsInternalServerError{}
+}
+
+/*GetStaticAssetVersionsInternalServerError handles this case with default header values.
+
+internal server error
+*/
+type GetStaticAssetVersionsInternalServerError struct {
+}
+
+func (o *GetStaticAssetVersionsInternalServerError) Error() string {
+	return fmt.Sprintf("[GET /api/lol/static-data/{region}/v1.2/versions][%d] getStaticAssetVersionsInternalServerError ", 500)
+}
+
+func (o *GetStaticAssetVersionsInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	return nil
+}
+
+// NewGetStaticAssetVersionsServiceUnavailable creates a GetStaticAssetVersionsServiceUnavailable with default headers values
+func NewGetStaticAssetVersionsServiceUnavailable() *GetStaticAssetVersionsServiceUnavailable {
+	return &GetStaticAssetVersionsServiceUnavailable{}
+}
+
+/*GetStaticAssetVersionsServiceUnavailable handles this case with default header values.
+
+service unavailable
+*/
+type GetStaticAssetVersionsServiceUnavailable struct {
+}
+
+func (o *GetStaticAssetVersionsServiceUnavailable) Error() string {
+	return fmt.Sprintf("[GET /api/lol/static-data/{region}/v1.2/versions][%d] getStaticAssetVersionsServiceUnavailable ", 503)
+}
+
+func (o *GetStaticAssetVersionsServiceUnavailable) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	return nil
 }
