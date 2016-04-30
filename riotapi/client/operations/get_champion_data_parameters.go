@@ -13,8 +13,12 @@ import (
 // NewGetChampionDataParams creates a new GetChampionDataParams object
 // with the default values initialized.
 func NewGetChampionDataParams() *GetChampionDataParams {
-	var ()
-	return &GetChampionDataParams{}
+	var (
+		champDataDefault string = string("image")
+	)
+	return &GetChampionDataParams{
+		ChampData: &champDataDefault,
+	}
 }
 
 /*GetChampionDataParams contains all the parameters to send to the API endpoint

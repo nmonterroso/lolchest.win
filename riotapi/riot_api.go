@@ -30,8 +30,7 @@ func NewRiotApi(apiKey string) RiotApi {
 }
 
 func (api *riotAPI) GetChampionData() []*models.ChampionData {
-	champData := "image"
-	params := operations.NewGetChampionDataParams().WithRegion(defaultRegion).WithChampData(&champData)
+	params := operations.NewGetChampionDataParams().WithRegion(defaultRegion)
 	data, err := client.Default.Operations.GetChampionData(params, api.auth)
 
 	if err != nil {
@@ -40,13 +39,28 @@ func (api *riotAPI) GetChampionData() []*models.ChampionData {
 	}
 
 	var champions []*models.ChampionData
+	urlBase := api.staticAssetURLBase()
 
 	for _, champ := range data.Payload.Data {
+		iconURL := fmt.Sprintf("%s/%s", urlBase, *champ.Image.Full)
 		champions = append(champions, &models.ChampionData{
-			IconURL: champ.Image.Full,
+			IconURL: &iconURL,
 			ID:      champ.ID,
 			Name:    champ.Name,
 		})
 	}
+
 	return champions
+}
+
+func (api *riotAPI) staticAssetURLBase() string {
+	params := operations.NewGetStaticAssetVersionsParams().WithRegion(defaultRegion)
+	data, err := client.Default.Operations.GetStaticAssetVersions(params, api.auth)
+
+	if err != nil {
+		fmt.Println(fmt.Sprintf("%s %v", reflect.TypeOf(err), err))
+		return ""
+	}
+
+	return fmt.Sprintf("http://ddragon.leagueoflegends.com/cdn/%s/img/champion", data.Payload[0])
 }

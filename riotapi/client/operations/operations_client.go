@@ -48,6 +48,32 @@ func (a *Client) GetChampionData(params *GetChampionDataParams, authInfo runtime
 	return result.(*GetChampionDataOK), nil
 }
 
+/*
+GetStaticAssetVersions gets list of static asset versions
+*/
+func (a *Client) GetStaticAssetVersions(params *GetStaticAssetVersionsParams, authInfo runtime.ClientAuthInfoWriter) (*GetStaticAssetVersionsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetStaticAssetVersionsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "getStaticAssetVersions",
+		Method:             "GET",
+		PathPattern:        "/api/lol/static-data/{region}/v1.2/versions",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{""},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetStaticAssetVersionsReader{formats: a.formats},
+		AuthInfo:           authInfo,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*GetStaticAssetVersionsOK), nil
+}
+
 // SetTransport changes the transport on the client
 func (a *Client) SetTransport(transport runtime.ClientTransport) {
 	a.transport = transport

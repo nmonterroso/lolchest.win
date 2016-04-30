@@ -24,6 +24,7 @@ paths:
         - name: champData
           type: string
           in: query
+          default: image
           enum:
             - image
       responses:
@@ -31,6 +32,24 @@ paths:
           description: all champion static data
           schema:
             $ref: "#/definitions/ChampionListDto"
+  /api/lol/static-data/{region}/v1.2/versions:
+    get:
+      operationId: getStaticAssetVersions
+      summary: get list of static asset versions
+      produces:
+        - application/json
+      parameters:
+        - name: region
+          type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          description: list of versions
+          schema:
+            type: array
+            items:
+              type: string
 securityDefinitions:
   apiKey:
     type: apiKey
