@@ -1,6 +1,9 @@
 package riotapi
 
 import (
+	"fmt"
+	"reflect"
+
 	runtime "github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/nmonterroso/lolchest.win/models"
@@ -22,13 +25,20 @@ type riotAPI struct {
 
 func NewRiotApi(apiKey string) RiotApi {
 	return &riotAPI{
-		auth: httptransport.APIKeyAuth("apiKey", "query", apiKey),
+		auth: httptransport.APIKeyAuth("api_key", "query", apiKey),
 	}
 }
 
 func (api *riotAPI) GetChampionData() []*models.ChampionData {
-	params := operations.NewGetChampionDataParams().WithRegion(defaultRegion)
-	data, _ := client.Default.Operations.GetChampionData(params, api.auth)
+	champData := "image"
+	params := operations.NewGetChampionDataParams().WithRegion(defaultRegion).WithChampData(&champData)
+	data, err := client.Default.Operations.GetChampionData(params, api.auth)
+
+	if err != nil {
+		fmt.Println(fmt.Sprintf("%s %v", reflect.TypeOf(err), err))
+		return nil
+	}
+
 	var champions []*models.ChampionData
 
 	for _, champ := range data.Payload.Data {

@@ -1,8 +1,10 @@
 package restapi
 
 import (
+	"os"
 	"crypto/tls"
 	"net/http"
+	"github.com/nmonterroso/lolchest.win/riotapi"
 
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
@@ -18,6 +20,8 @@ func configureFlags(api *operations.LolchestWinAPI) {
 }
 
 func configureAPI(api *operations.LolchestWinAPI) http.Handler {
+	apiKey := os.Getenv("RIOT_API_KEY")
+	riotAPI := riotapi.NewRiotApi(apiKey)
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -25,7 +29,7 @@ func configureAPI(api *operations.LolchestWinAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.GetAllChampDataHandler = operations.GetAllChampDataHandler()
+	api.GetAllChampDataHandler = operations.NewGetAllChampDataHandler(riotAPI)
 	api.GetSummonerHandler = operations.GetSummonerHandlerFunc(func(params operations.GetSummonerParams) middleware.Responder {
 		return middleware.NotImplemented("operation .GetSummoner has not yet been implemented")
 	})

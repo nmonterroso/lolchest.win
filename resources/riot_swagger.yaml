@@ -21,6 +21,11 @@ paths:
           type: string
           in: path
           required: true
+        - name: champData
+          type: string
+          in: query
+          enum:
+            - image
       responses:
         '200':
           description: all champion static data

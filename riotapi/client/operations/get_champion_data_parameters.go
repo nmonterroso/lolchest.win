@@ -22,8 +22,16 @@ for the get champion data operation typically these are written to a http.Reques
 */
 type GetChampionDataParams struct {
 
+	/*ChampData*/
+	ChampData *string
 	/*Region*/
 	Region string
+}
+
+// WithChampData adds the champData to the get champion data params
+func (o *GetChampionDataParams) WithChampData(ChampData *string) *GetChampionDataParams {
+	o.ChampData = ChampData
+	return o
 }
 
 // WithRegion adds the region to the get champion data params
@@ -36,6 +44,22 @@ func (o *GetChampionDataParams) WithRegion(Region string) *GetChampionDataParams
 func (o *GetChampionDataParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
 	var res []error
+
+	if o.ChampData != nil {
+
+		// query param champData
+		var qrChampData string
+		if o.ChampData != nil {
+			qrChampData = *o.ChampData
+		}
+		qChampData := qrChampData
+		if qChampData != "" {
+			if err := r.SetQueryParam("champData", qChampData); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param region
 	if err := r.SetPathParam("region", o.Region); err != nil {
