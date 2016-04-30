@@ -7,14 +7,13 @@ import (
 	runtime "github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/nmonterroso/lolchest.win/models"
-	serverops "github.com/nmonterroso/lolchest.win/restapi/operations"
 	"github.com/nmonterroso/lolchest.win/riotapi/client"
 	clientops "github.com/nmonterroso/lolchest.win/riotapi/client/operations"
 )
 
 type RiotApiBridge interface {
 	GetChampionData() []*models.ChampionData
-	GetSummonerData(params serverops.GetSummonerParams) *models.Summoner
+	GetSummonerData(name string) *models.Summoner
 }
 
 type riotAPIBridge struct {
@@ -50,9 +49,9 @@ func (api *riotAPIBridge) GetChampionData() []*models.ChampionData {
 	return champions
 }
 
-func (api *riotAPIBridge) GetSummonerData(params serverops.GetSummonerParams) *models.Summoner {
-	params := clientops.NewGetSummonerProfileParams().WithSummonerNames(params.Name)
-	data, err := client.Default.Operations.GetSummonerProfile(nil, api.auth)
+func (api *riotAPIBridge) GetSummonerData(name string) *models.Summoner {
+	profileParams := clientops.NewGetSummonerProfileParams().WithSummonerNames(name)
+	profileResponse, err := client.Default.Operations.GetSummonerProfile(profileParams, api.auth)
 
 	if err != nil {
 		fmt.Println(fmt.Sprintf("%s %v", reflect.TypeOf(err), err))
@@ -63,29 +62,31 @@ func (api *riotAPIBridge) GetSummonerData(params serverops.GetSummonerParams) *m
 	var summoner *models.Summoner
 
 	// TODO: there might be more than one, this will take just the last one
-	for _, summonerProfile := range data.Payload {
+	for _, summonerProfile := range profileResponse.Payload {
+		iconURL := fmt.Sprintf("%s/profileicon/%d.png", urlBase, *summonerProfile.ProfileIconID)
 		summoner = &models.Summoner{
-			ID: summonerProfile.ID,
-			Name: summonerProfile.Name
-			ProfileIconURL: fmt.Sprintf("%s/profileicon/%d.png", urlBase, summonerProfile.ProfileIconID)
-			ChampData: make([]*models.SummonerChampChestData, 0)
+			ID:             summonerProfile.ID,
+			Name:           summonerProfile.Name,
+			ProfileIconURL: &iconURL,
+			ChampData:      make([]*models.SummonerChampChestData, 0),
 		}
 	}
 
-	params = clientops.NewGetSummonerChampionMasteryParams().WithSummonerID(*summoner.ID)
-	data, err = client.Default.Operations.GetSummonerChampionMastery(params, api.auth)
+	masteryParams := clientops.NewGetSummonerChampionMasteryParams().WithSummonerID(*summoner.ID)
+	masteryResponse, err := client.Default.Operations.GetSummonerChampionMastery(masteryParams, api.auth)
 
 	if err != nil {
 		fmt.Println(fmt.Sprintf("%s %v", reflect.TypeOf(err), err))
 		return nil
 	}
 
-	for mastery := range data.Payload {
+	for _, mastery := range masteryResponse.Payload {
+		chestAvailable := !*mastery.ChestGranted
 		summoner.ChampData = append(summoner.ChampData, &models.SummonerChampChestData{
-			ChampID: mastery.ChampionID,
-			ChestIsAvailable: !mastery.ChestGranted,
-			HighestGrade: mastery.HighestGrade,
-		}
+			ChampID:          mastery.ChampionID,
+			ChestIsAvailable: &chestAvailable,
+			HighestGrade:     mastery.HighestGrade,
+		})
 	}
 
 	return summoner

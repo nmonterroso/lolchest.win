@@ -8,7 +8,6 @@ import (
 
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
 
 	"github.com/nmonterroso/lolchest.win/restapi/operations"
 )
@@ -30,9 +29,7 @@ func configureAPI(api *operations.LolchestWinAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.GetAllChampDataHandler = operations.NewGetAllChampDataHandler(riotAPI)
-	api.GetSummonerHandler = operations.GetSummonerHandlerFunc(func(params operations.GetSummonerParams) middleware.Responder {
-		return middleware.NotImplemented("operation .GetSummoner has not yet been implemented")
-	})
+	api.GetSummonerHandler = operations.NewGetSummonerHandler(riotAPI)
 
 	api.ServerShutdown = func() {}
 
