@@ -8,6 +8,7 @@ import (
 
 	graceful "github.com/tylerb/graceful"
 
+	"github.com/go-openapi/swag"
 	"github.com/nmonterroso/lolchest.win/restapi/operations"
 )
 

@@ -87,11 +87,14 @@ definitions:
     type: object
     required:
       - champId
+      - highestGrade
       - chestIsAvailable
     properties:
       champId:
         type: integer
         format: int64
+       highestGrade:
+        type: string
       chestIsAvailable:
         type: boolean
   Error:
