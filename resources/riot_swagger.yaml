@@ -20,6 +20,7 @@ paths:
         - name: region
           type: string
           in: path
+          default: na
           required: true
         - name: champData
           type: string
@@ -42,6 +43,7 @@ paths:
         - name: region
           type: string
           in: path
+          default: na
           required: true
       responses:
         '200':
@@ -50,6 +52,53 @@ paths:
             type: array
             items:
               type: string
+  /api/lol/{region}/v1.4/summoner/by-name/{summonerNames}:
+    get:
+      operationId: getSummonerProfile
+      summary: get basic information about a summoner
+      produces:
+        - application/json
+      parameters:
+        - name: region
+          type: string
+          in: path
+          default: na
+          required: true
+        - name: summonerNames
+          type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          description: list of summoner profile data
+          schema:
+            type: object
+            additionalProperties:
+              $ref: "#/definitions/SummonerDto"
+  /championmastery/location/{platformId}/player/{summonerId}/champions:
+    get:
+      operationId: getSummonerChampionMastery
+      summary: get a summoner's champion mastery for all champions
+      produces:
+        - application/json
+      parameters:
+        - name: platformId
+          type: string
+          in: path
+          default: na1
+          required: true
+        - name: summonerId
+          type: integer
+          format: int64
+          in: path
+          required: true
+      responses:
+        '200':
+          description: list of champion mastery data for a summoner
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/ChampionMasteryDto"
 securityDefinitions:
   apiKey:
     type: apiKey
@@ -91,4 +140,33 @@ definitions:
       - full
     properties:
       full:
+        type: string
+  SummonerDto:
+    type: object
+    required:
+      - id
+      - name
+      - profileIconId
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      profileIconId:
+        type: integer
+        format: int32
+  ChampionMasteryDto:
+    type: object
+    required:
+      - championId
+      - chestGranted
+      - highestGrade
+    properties:
+      championId:
+        type: integer
+        format: int64
+      chestGranted:
+        type: boolean
+      highestGrade:
         type: string

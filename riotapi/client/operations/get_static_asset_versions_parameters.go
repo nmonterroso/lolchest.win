@@ -13,8 +13,12 @@ import (
 // NewGetStaticAssetVersionsParams creates a new GetStaticAssetVersionsParams object
 // with the default values initialized.
 func NewGetStaticAssetVersionsParams() *GetStaticAssetVersionsParams {
-	var ()
-	return &GetStaticAssetVersionsParams{}
+	var (
+		regionDefault string = string("na")
+	)
+	return &GetStaticAssetVersionsParams{
+		Region: regionDefault,
+	}
 }
 
 /*GetStaticAssetVersionsParams contains all the parameters to send to the API endpoint

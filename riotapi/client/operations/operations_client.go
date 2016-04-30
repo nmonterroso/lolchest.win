@@ -74,6 +74,58 @@ func (a *Client) GetStaticAssetVersions(params *GetStaticAssetVersionsParams, au
 	return result.(*GetStaticAssetVersionsOK), nil
 }
 
+/*
+GetSummonerChampionMastery gets a summoner s champion mastery for all champions
+*/
+func (a *Client) GetSummonerChampionMastery(params *GetSummonerChampionMasteryParams, authInfo runtime.ClientAuthInfoWriter) (*GetSummonerChampionMasteryOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetSummonerChampionMasteryParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "getSummonerChampionMastery",
+		Method:             "GET",
+		PathPattern:        "/championmastery/location/{platformId}/player/{summonerId}/champions",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{""},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetSummonerChampionMasteryReader{formats: a.formats},
+		AuthInfo:           authInfo,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*GetSummonerChampionMasteryOK), nil
+}
+
+/*
+GetSummonerProfile gets basic information about a summoner
+*/
+func (a *Client) GetSummonerProfile(params *GetSummonerProfileParams, authInfo runtime.ClientAuthInfoWriter) (*GetSummonerProfileOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetSummonerProfileParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "getSummonerProfile",
+		Method:             "GET",
+		PathPattern:        "/api/lol/{region}/v1.4/summoner/by-name/{summonerNames}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{""},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetSummonerProfileReader{formats: a.formats},
+		AuthInfo:           authInfo,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*GetSummonerProfileOK), nil
+}
+
 // SetTransport changes the transport on the client
 func (a *Client) SetTransport(transport runtime.ClientTransport) {
 	a.transport = transport

@@ -15,9 +15,11 @@ import (
 func NewGetChampionDataParams() *GetChampionDataParams {
 	var (
 		champDataDefault string = string("image")
+		regionDefault    string = string("na")
 	)
 	return &GetChampionDataParams{
 		ChampData: &champDataDefault,
+		Region:    regionDefault,
 	}
 }
 

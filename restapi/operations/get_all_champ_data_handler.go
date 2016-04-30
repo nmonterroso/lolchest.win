@@ -1,27 +1,20 @@
 package operations
 
 import (
-	middleware "github.com/go-openapi/runtime/middleware"
-	"github.com/nmonterroso/lolchest.win/models"
+	"github.com/go-openapi/runtime/middleware"
 	"github.com/nmonterroso/lolchest.win/riotapi"
 )
 
 type getAllChampDataHandler struct {
-	cache   []*models.ChampionData
-	riotAPI riotapi.RiotApi
+	bridge riotapi.RiotApiBridge
 }
 
-func NewGetAllChampDataHandler(api riotapi.RiotApi) GetAllChampDataHandler {
+func NewGetAllChampDataHandler(bridge riotapi.RiotApiBridge) GetAllChampDataHandler {
 	return &getAllChampDataHandler{
-		cache:   nil,
-		riotAPI: api,
+		bridge: bridge,
 	}
 }
 
 func (h *getAllChampDataHandler) Handle() middleware.Responder {
-	if h.cache == nil {
-		h.cache = h.riotAPI.GetChampionData()
-	}
-
-	return NewGetAllChampDataOK().WithPayload(h.cache)
+	return NewGetAllChampDataOK().WithPayload(h.bridge.GetChampionData())
 }
