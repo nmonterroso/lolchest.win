@@ -46,3 +46,21 @@ func (o *GetAllChampDataOK) WriteResponse(rw http.ResponseWriter, producer runti
 	}
 
 }
+
+/*GetAllChampDataBadGateway invalid response from riot api
+
+swagger:response getAllChampDataBadGateway
+*/
+type GetAllChampDataBadGateway struct {
+}
+
+// NewGetAllChampDataBadGateway creates GetAllChampDataBadGateway with default headers values
+func NewGetAllChampDataBadGateway() *GetAllChampDataBadGateway {
+	return &GetAllChampDataBadGateway{}
+}
+
+// WriteResponse to the client
+func (o *GetAllChampDataBadGateway) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(502)
+}

@@ -23,6 +23,8 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/ChampionData"
+        '502':
+          description: invalid response from riot api
   /summoner/{name}:
     get:
       operationId: getSummoner
@@ -45,10 +47,8 @@ paths:
           description: summoner data
           schema:
             $ref: '#/definitions/Summoner'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+        '502':
+          description: invalid response from riot api
 definitions:
   Summoner:
     type: object
@@ -97,16 +97,3 @@ definitions:
         type: string
       chestIsAvailable:
         type: boolean
-  Error:
-    type: object
-    required:
-      - code
-      - message
-    properties:
-      code:
-        type: integer
-        format: int32
-        description: the HTTP status of the response
-      message:
-        type: string
-        description: details about why the request failed

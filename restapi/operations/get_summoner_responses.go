@@ -48,57 +48,20 @@ func (o *GetSummonerOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 	}
 }
 
-/*GetSummonerDefault Unexpected error
+/*GetSummonerBadGateway invalid response from riot api
 
-swagger:response getSummonerDefault
+swagger:response getSummonerBadGateway
 */
-type GetSummonerDefault struct {
-	_statusCode int
-
-	// In: body
-	Payload *models.Error `json:"body,omitempty"`
+type GetSummonerBadGateway struct {
 }
 
-// NewGetSummonerDefault creates GetSummonerDefault with default headers values
-func NewGetSummonerDefault(code int) *GetSummonerDefault {
-	if code <= 0 {
-		code = 500
-	}
-
-	return &GetSummonerDefault{
-		_statusCode: code,
-	}
-}
-
-// WithStatusCode adds the status to the get summoner default response
-func (o *GetSummonerDefault) WithStatusCode(code int) *GetSummonerDefault {
-	o._statusCode = code
-	return o
-}
-
-// SetStatusCode sets the status to the get summoner default response
-func (o *GetSummonerDefault) SetStatusCode(code int) {
-	o._statusCode = code
-}
-
-// WithPayload adds the payload to the get summoner default response
-func (o *GetSummonerDefault) WithPayload(payload *models.Error) *GetSummonerDefault {
-	o.Payload = payload
-	return o
-}
-
-// SetPayload sets the payload to the get summoner default response
-func (o *GetSummonerDefault) SetPayload(payload *models.Error) {
-	o.Payload = payload
+// NewGetSummonerBadGateway creates GetSummonerBadGateway with default headers values
+func NewGetSummonerBadGateway() *GetSummonerBadGateway {
+	return &GetSummonerBadGateway{}
 }
 
 // WriteResponse to the client
-func (o *GetSummonerDefault) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+func (o *GetSummonerBadGateway) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.WriteHeader(o._statusCode)
-	if o.Payload != nil {
-		if err := producer.Produce(rw, o.Payload); err != nil {
-			panic(err) // let the recovery middleware deal with this
-		}
-	}
+	rw.WriteHeader(502)
 }
