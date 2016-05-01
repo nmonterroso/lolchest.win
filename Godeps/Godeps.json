@@ -91,6 +91,14 @@
 			"Rev": "5fa9ff0392746aeae1c4b37fcc42c65afa7a9587"
 		},
 		{
+			"ImportPath": "github.com/rs/cors",
+			"Rev": "3ca2b550f6a4333b63c845850f760a7d00412cd6"
+		},
+		{
+			"ImportPath": "github.com/rs/xhandler",
+			"Rev": "d9d9599b6aaf6a058cb7b1f48291ded2cbd13390"
+		},
+		{
 			"ImportPath": "github.com/tylerb/graceful",
 			"Comment": "v1.2.5",
 			"Rev": "9a3d4236b03bb5d26f7951134d248f9d5510d599"
