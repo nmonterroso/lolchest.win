@@ -58,7 +58,6 @@ func (api *riotAPIBridge) GetSummonerData(name string) (*models.Summoner, error)
 	return summoner, nil
 }
 
-// TODO: since this is all caching a bunch of pointers, does this not handle concurrent users as expected?
 func (api *riotAPIBridge) getChampions(iconURLBase string) (map[int64]*models.ChampionMastery, error) {
 	data, err := api.cache.GetOrSet("championList", 24*time.Hour, func() (interface{}, error) {
 		resp, err := client.Default.Operations.GetChampionData(nil, api.auth)
@@ -67,27 +66,29 @@ func (api *riotAPIBridge) getChampions(iconURLBase string) (map[int64]*models.Ch
 			return nil, err
 		}
 
-		champions := make(map[int64]*models.ChampionMastery)
-		for _, champ := range resp.Payload.Data {
-			iconURL := fmt.Sprintf("%s/champion/%s", iconURLBase, *champ.Image.Full)
-			chestAvailable := true
-
-			champions[*champ.ID] = &models.ChampionMastery{
-				ChampID:          champ.ID,
-				ChampName:        champ.Name,
-				ChampIconURL:     &iconURL,
-				ChestIsAvailable: &chestAvailable,
-			}
-		}
-
-		return champions, nil
+		return resp.Payload.Data, nil
 	})
 
 	if err != nil {
 		return nil, err
 	}
 
-	return data.(map[int64]*models.ChampionMastery), nil
+	championList := data.(map[string]clientmodels.ChampionDto)
+	champions := make(map[int64]*models.ChampionMastery)
+
+	for _, champ := range championList {
+		iconURL := fmt.Sprintf("%s/champion/%s", iconURLBase, *champ.Image.Full)
+		chestAvailable := true
+
+		champions[*champ.ID] = &models.ChampionMastery{
+			ChampID:          champ.ID,
+			ChampName:        champ.Name,
+			ChampIconURL:     &iconURL,
+			ChestIsAvailable: &chestAvailable,
+		}
+	}
+
+	return champions, nil
 }
 
 func (api *riotAPIBridge) getSummoner(name string, urlBase string) (*models.Summoner, error) {
