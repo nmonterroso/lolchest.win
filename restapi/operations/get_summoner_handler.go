@@ -1,6 +1,9 @@
 package operations
 
 import (
+	"fmt"
+	"reflect"
+
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/nmonterroso/lolchest.win/riotapi"
@@ -24,6 +27,7 @@ func (h *getSummonerHandler) Handle(params GetSummonerParams) middleware.Respond
 		case *runtime.APIError:
 			return NewGetSummonerInternalServerError()
 		default:
+			fmt.Println(fmt.Sprintf("%s %v", reflect.TypeOf(err), err))
 			return NewGetSummonerBadGateway()
 		}
 	}
