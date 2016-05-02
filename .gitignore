@@ -1,2 +1,7 @@
 .vscode/
 **/debug
+
+**.iml
+
+**/node_modules
+**/bower_components
