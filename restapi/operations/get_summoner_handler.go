@@ -22,9 +22,9 @@ func (h *getSummonerHandler) Handle(params GetSummonerParams) middleware.Respond
 	if err != nil {
 		switch err.(type) {
 		case *runtime.APIError:
-			return NewGetAllChampDataBadGateway()
+			return NewGetSummonerInternalServerError()
 		default:
-			return NewGetAllChampDataInternalServerError()
+			return NewGetSummonerBadGateway()
 		}
 	}
 

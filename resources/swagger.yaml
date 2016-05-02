@@ -10,23 +10,6 @@ basePath: /
 produces:
   - application/json
 paths:
-  /champions:
-    get:
-      operationId: getAllChampData
-      summary: get static champion data
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: all champion static data
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/ChampionData"
-        '500':
-          description: unexpected error
-        '502':
-          description: invalid response from riot api
   /summoner/{name}:
     get:
       operationId: getSummoner
@@ -60,7 +43,7 @@ definitions:
       - id
       - name
       - profileIconUrl
-      - champData
+      - champMastery
     properties:
       id:
         type: integer
@@ -69,34 +52,25 @@ definitions:
         type: string
       profileIconUrl:
         type: string
-      champData:
+      champMastery:
         type: "array"
         items:
-          $ref: "#/definitions/SummonerChampChestData"
-  ChampionData:
-    type: object
-    required:
-      - id
-      - name
-      - iconUrl
-    properties:
-      id:
-        type: integer
-        format: int64
-      name:
-        type: string
-      iconUrl:
-        type: string
-  SummonerChampChestData:
+          $ref: "#/definitions/ChampionMastery"
+  ChampionMastery:
     type: object
     required:
       - champId
-      - highestGrade
+      - champName
+      - champIconUrl
       - chestIsAvailable
     properties:
       champId:
         type: integer
         format: int64
+      champName:
+        type: string
+      champIconUrl:
+        type: string
       highestGrade:
         type: string
       chestIsAvailable:
