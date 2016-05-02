@@ -1,9 +1,10 @@
 package restapi
 
 import (
-	"os"
 	"crypto/tls"
 	"net/http"
+	"os"
+
 	"github.com/nmonterroso/lolchest.win/riotapi"
 
 	errors "github.com/go-openapi/errors"
@@ -21,7 +22,7 @@ func configureFlags(api *operations.LolchestWinAPI) {
 
 func configureAPI(api *operations.LolchestWinAPI) http.Handler {
 	apiKey := os.Getenv("RIOT_API_KEY")
-	riotAPI := riotapi.NewRiotApi(apiKey)
+	riotAPI := riotapi.NewRiotAPI(apiKey)
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -29,7 +30,6 @@ func configureAPI(api *operations.LolchestWinAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.GetAllChampDataHandler = operations.NewGetAllChampDataHandler(riotAPI)
 	api.GetSummonerHandler = operations.NewGetSummonerHandler(riotAPI)
 
 	api.ServerShutdown = func() {}

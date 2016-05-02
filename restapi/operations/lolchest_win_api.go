@@ -44,8 +44,6 @@ type LolchestWinAPI struct {
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
 
-	// GetAllChampDataHandler sets the operation handler for the get all champ data operation
-	GetAllChampDataHandler GetAllChampDataHandler
 	// GetSummonerHandler sets the operation handler for the get summoner operation
 	GetSummonerHandler GetSummonerHandler
 
@@ -101,10 +99,6 @@ func (o *LolchestWinAPI) Validate() error {
 
 	if o.JSONProducer == nil {
 		unregistered = append(unregistered, "JSONProducer")
-	}
-
-	if o.GetAllChampDataHandler == nil {
-		unregistered = append(unregistered, "GetAllChampDataHandler")
 	}
 
 	if o.GetSummonerHandler == nil {
@@ -183,11 +177,6 @@ func (o *LolchestWinAPI) initHandlerCache() {
 	if o.handlers == nil {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
-
-	if o.handlers["GET"] == nil {
-		o.handlers[strings.ToUpper("GET")] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/champions"] = NewGetAllChampData(o.context, o.GetAllChampDataHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers[strings.ToUpper("GET")] = make(map[string]http.Handler)

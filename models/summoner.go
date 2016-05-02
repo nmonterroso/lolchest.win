@@ -16,11 +16,11 @@ swagger:model Summoner
 */
 type Summoner struct {
 
-	/* champ data
+	/* champ mastery
 
 	Required: true
 	*/
-	ChampData []*SummonerChampChestData `json:"champData"`
+	ChampMastery []*ChampionMastery `json:"champMastery"`
 
 	/* id
 
@@ -45,7 +45,7 @@ type Summoner struct {
 func (m *Summoner) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateChampData(formats); err != nil {
+	if err := m.validateChampMastery(formats); err != nil {
 		// prop
 		res = append(res, err)
 	}
@@ -71,9 +71,9 @@ func (m *Summoner) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Summoner) validateChampData(formats strfmt.Registry) error {
+func (m *Summoner) validateChampMastery(formats strfmt.Registry) error {
 
-	if err := validate.Required("champData", "body", m.ChampData); err != nil {
+	if err := validate.Required("champMastery", "body", m.ChampMastery); err != nil {
 		return err
 	}
 
