@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="lolChestApp">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" ng-app="app">
 <head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
@@ -17,10 +17,12 @@
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
 <script src="bower_components/angular-resource/angular-resource.min.js"></script>
 
-<script src="/app/app.js"></script>
-<script src="/app/components/profile/profileController.js"></script>
-<script src="/app/components/profile/profileService.js"></script>
+<!-- TODO: better way of importing JS scripts -->
+<script src="/app/modules/home/home.module.js"></script>
+<script src="/app/modules/profile/profile.module.js"></script>
+<script src="/app/modules/profile/profile.service.js"></script>
+<script src="/app/modules/profile/profile.ctrl.js"></script>
 <script src="/app/shared/filters.js"></script>
-
+<script src="/app/app.js"></script>
 
 </html>

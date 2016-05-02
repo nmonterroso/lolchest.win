@@ -2,9 +2,9 @@
 
 /* Profile Controller */
 
-var lolChestApp = angular.module('lolChestApp');
+var profileMod = angular.module('app.profile');
 
-lolChestApp.controller('ProfileController', ['$scope','$routeParams', 'Summoner', function($scope, $routeParams, Summoner) {
+profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', function($scope, $routeParams, Summoner) {
 
 	var summonerData = Summoner.get({
 		summonerName: $routeParams.summonerName

@@ -2,18 +2,11 @@
 
 /* App Module */
 
-var lolChestApp = angular.module('lolChestApp', ['ngRoute', 'lolChestFilters', 'ProfileService']);
+var lolChestApp = angular.module('app', ['ngRoute', 'lolChestFilters', 'app.profile', 'app.home']);
 
 lolChestApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
-			.when('/', {
-				templateUrl: 'app/components/home/homeView.html'
-			})
-			.when('/profile/:summonerName', {
-				templateUrl: 'app/components/profile/profileView.html',
-				controller: 'ProfileController'
-			})
 			.when('/404', {
 				templateUrl: 'app/shared/404.html'
 			})
