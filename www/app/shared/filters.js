@@ -15,6 +15,9 @@ lolFilters
  */
 	.filter('startsWith', function() {
 		return function(items, prefix, itemProperty) {
+			if (!items) {
+				return [];
+			}
 			return items.filter(function(item) {
 				if (prefix === undefined) {
 					return true; // this is when the search prefix is blank
