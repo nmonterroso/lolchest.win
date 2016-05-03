@@ -1,13 +1,10 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row top-bar">
     <!--Top Search/Sort Bar Content-->
 
     Search: <input ng-model="champNameQuery">
     Sort by:
-    <select ng-model="orderProp">
-      <option value="champName">Alphabetical</option>
-      <option value="chestIsAvailable">Chest Availability</option>
-      <option value="highestGrade">Grade</option>
+    <select ng-model="selectedSortOrder" ng-options="y.text for (x, y) in sortOptions">
     </select>
 
   </div>
@@ -16,7 +13,7 @@
     <!-- Main Content Grid -->
 
     <div class="col-md-2 champ"
-         ng-repeat="mastery in masteries | startsWith: champNameQuery:'champName' | orderBy: orderProp">
+         ng-repeat="mastery in masteries | startsWith: champNameQuery:'champName' | orderBy: sortFunc:selectedSortOrder.reverse">
       <img ng-class="{'missing-chest': mastery.chestIsAvailable, 'has-chest': !mastery.chestIsAvailable}"
            ng-src="{{mastery.champIconUrl}}">
       <div class="grade">Grade: {{mastery.highestGrade || 'N/A'}}</div>
