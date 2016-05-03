@@ -2,7 +2,7 @@
 
 /* Profile Module */
 
-var profileMod = angular.module('app.profile', ['ngResource']);
+var profileMod = angular.module('lolApp.profile', ['ngResource']);
 
 profileMod.config(['$routeProvider',
 	function($routeProvider) {

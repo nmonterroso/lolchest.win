@@ -1,0 +1,26 @@
+.top-bar {
+  padding: 20px
+}
+
+.missing-chest {
+
+}
+
+.has-chest {
+  opacity: 0.5;
+  outline: 2px solid gold;
+  outline-offset: -3px;
+}
+
+.champ {
+  padding-bottom: 10px;
+}
+
+.champ div {
+	text-align: center;
+}
+
+.champ img {
+	display: block;
+	margin: 0 auto;
+}

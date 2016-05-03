@@ -2,7 +2,7 @@
 
 /* Home Module */
 
-var homeMod = angular.module('app.home', []);
+var homeMod = angular.module('lolApp.home', []);
 
 homeMod.config(['$routeProvider',
 	function($routeProvider) {
