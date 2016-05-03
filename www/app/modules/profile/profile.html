@@ -15,11 +15,11 @@
   <div class="row">
     <!-- Main Content Grid -->
 
-    <div ng-class="col-md-2 champ {'missing-chest': mastery.chestIsAvailable, 'has-chest': !mastery.chestIsAvailabe}"
+    <div class="col-md-2 champ"
          ng-repeat="mastery in masteries | filter: {'champName': champNameQuery} | orderBy: orderProp">
-      <img ng-src="{{mastery.champIconUrl}}"><br>
-      Highest Grade: {{mastery.highestGrade || 'N/A'}}<br>
-      Chest Available: {{mastery.chestIsAvailable | checkmark}}
+      <img ng-class="{'missing-chest': mastery.chestIsAvailable, 'has-chest': !mastery.chestIsAvailable}"
+           ng-src="{{mastery.champIconUrl}}">
+      <div class="grade">Grade: {{mastery.highestGrade || 'N/A'}}</div>
     </div>
   </div>
 </div>
