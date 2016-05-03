@@ -2,9 +2,9 @@
 
 /* Filters */
 
-var lolChestFilters = angular.module('lolChestFilters', []);
+var lolFilters = angular.module('lolFilters', []);
 
-lolChestFilters.filter('checkmark', function() {
+lolFilters.filter('checkmark', function() {
 
 	return function(input) {
 		return input ? '\u2713' : '\u2718';

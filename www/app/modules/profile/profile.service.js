@@ -2,7 +2,7 @@
 
 /* Profile Service */
 
-var profileMod = angular.module('app.profile');
+var profileMod = angular.module('lolApp.profile');
 
 profileMod.factory('Summoner', ['$resource', function($resource) {
 

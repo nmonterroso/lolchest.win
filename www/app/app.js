@@ -2,9 +2,9 @@
 
 /* App Module */
 
-var lolChestApp = angular.module('app', ['ngRoute', 'lolChestFilters', 'app.profile', 'app.home']);
+var lolApp = angular.module('lolApp', ['ngRoute', 'lolFilters', 'lolApp.profile', 'lolApp.home']);
 
-lolChestApp.config(['$routeProvider',
+lolApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
 			.when('/404', {

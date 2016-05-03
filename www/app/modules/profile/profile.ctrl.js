@@ -2,7 +2,7 @@
 
 /* Profile Controller */
 
-var profileMod = angular.module('app.profile');
+var profileMod = angular.module('lolApp.profile');
 
 profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', function($scope, $routeParams, Summoner) {
 

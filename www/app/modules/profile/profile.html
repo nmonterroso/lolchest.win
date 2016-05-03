@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="row">
+  <div class="row top-bar">
     <!--Top Search/Sort Bar Content-->
 
     Search: <input ng-model="champNameQuery">
@@ -15,7 +15,8 @@
   <div class="row">
     <!-- Main Content Grid -->
 
-    <div class="col-md-2" ng-repeat="mastery in masteries | filter: {'champName': champNameQuery} | orderBy: orderProp">
+    <div ng-class="col-md-2 champ {'missing-chest': mastery.chestIsAvailable, 'has-chest': !mastery.chestIsAvailabe}"
+         ng-repeat="mastery in masteries | filter: {'champName': champNameQuery} | orderBy: orderProp">
       <img ng-src="{{mastery.champIconUrl}}"><br>
       Highest Grade: {{mastery.highestGrade || 'N/A'}}<br>
       Chest Available: {{mastery.chestIsAvailable | checkmark}}
