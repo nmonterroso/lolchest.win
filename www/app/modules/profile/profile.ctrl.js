@@ -16,51 +16,29 @@ profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'prof
 		alpha: {
 			text: 'Champion',
 			reverse: false,
-			sortType: profileConst.sortTypeAlphabetical,
-			property: 'champName'
-		},
-		revAlpha: {
-			text: 'Reverse Champion',
-			reverse: true,
-			sortType: profileConst.sortTypeAlphabetical,
-			property: 'champName'
+			sortType: profileConst.sortTypeChamp
 		},
 		chestFirst: {
 			text: 'Chests Awarded',
 			reverse: false,
-			sortType: profileConst.sortTypeAlphabetical,
-			property: 'chestIsAvailable'
+			sortType: profileConst.sortTypeChest
 		},
 		chestLast: {
 			text: 'Chests Available',
 			reverse: true,
-			sortType: profileConst.sortTypeAlphabetical,
-			property: 'chestIsAvailable'
+			sortType: profileConst.sortTypeChest
 		},
 		gradeBest: {
 			text: 'Best Grades',
 			reverse: false,
-			sortType: profileConst.sortTypeGrade,
-			property: 'highestGrade'
+			sortType: profileConst.sortTypeGrade
 		},
 		gradeWorst: {
 			text: 'Worst Grades',
 			reverse: true,
-			sortType: profileConst.sortTypeGrade,
-			property: 'highestGrade'
+			sortType: profileConst.sortTypeGrade
 		}
 	};
 
-	// TODO: sort within sort, eg. sort by grades after sorting by chests
-	$scope.sortFunc = function(item) {
-		var property = item[$scope.selectedSortOrder.property];
-		switch($scope.selectedSortOrder.sortType) {
-			case profileConst.sortTypeAlphabetical:
-				return property;
-			case profileConst.sortTypeGrade:
-				return profileConst.gradeOrder.indexOf(property);
-		}
-	};
-
-	$scope.selectedSortOrder = $scope.sortOptions.gradeBest;
+	$scope.selectedSortOrder = $scope.sortOptions.chestLast;
 }]);
