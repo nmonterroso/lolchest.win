@@ -12,7 +12,7 @@
   <div class="row">
     <!-- Main Content Grid -->
 
-    <div class="col-md-2 champ"
+    <div class="col-xs-5 col-sm-3 col-md-2 champ"
          ng-repeat="mastery in masteries | startsWith: champNameQuery:'champName' | orderBy: sortFunc:selectedSortOrder.reverse">
       <img ng-class="{'missing-chest': mastery.chestIsAvailable, 'has-chest': !mastery.chestIsAvailable}"
            ng-src="{{mastery.champIconUrl}}">
