@@ -1,32 +1,38 @@
 <div class="profile">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#lolchest-nav">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
         <a class="navbar-brand" href="{{'#/'}}">
           <img src="/assets/img/chest-key.png" />
           LoLChest.win
         </a>
       </div>
-      <form class="navbar-form navbar-left" action="{{'#/profile/'+summonerName}}">
-        <input class="search-field" type="text" ng-model="summonerName" size="30" placeholder="Summoner Name" value="{{summoner.name}}">
-        <input class="search-button" type="submit" value="Search">
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="{{'#/profile/'+summoner.name}}" class="dropdown-toggle" data-toggle="dropdown">{{selectedSortOrder.text}} <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li ng-repeat="s in sortOptions">
-              <a href ng-click="setSortOrder($index)">{{s.text}}</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-right" onsubmit="return false;">
-        <input ng-model="champNameQuery" placeholder="Champion Name" size="30">
-      </form>
+      <div class="collapse navbar-collapse" id="lolchest-nav">
+        <form class="navbar-form navbar-left" action="{{'#/profile/'+summonerName}}">
+          <input class="search-field" type="text" ng-model="summonerName" size="30" placeholder="Summoner Name" value="{{summoner.name}}">
+          <input class="search-button" type="submit" value="Search">
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="{{'#/profile/'+summoner.name}}" class="dropdown-toggle" data-toggle="dropdown">{{selectedSortOrder.text}} <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li ng-repeat="s in sortOptions">
+                <a href ng-click="setSortOrder($index)">{{s.text}}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-right" onsubmit="return false;">
+          <input ng-model="champNameQuery" placeholder="Champion Name" size="30">
+        </form>
+      </div>
     </div>
   </nav>
-  <h3>LoLChest.win</h3>
   <div id="profile-header">
     <div class="container">
       <profile-header name="summoner.name"
