@@ -1,6 +1,7 @@
 .main-container {
 	background-color: #02151B;
-	color: white
+	color: white;
+	font-family: 'PT Sans', sans-serif;
 }
 
 .home {
@@ -27,32 +28,37 @@
 	font-size: small;
 }
 
-.champ {
-	height: 120px;
-	width: 120px;
+#champ {
+	height: 122px;
+	width: 122px;
 }
 
-.champ-chest-missing {
-	outline: 1px solid #053849;
-	outline-offset: -1px;
+.champ-chest-earned, .champ-chest-missing {
+  outline: 1px solid #053849;
+  outline-offset: -1px;
+	padding: 1px;
 }
 
-.champ-chest-earned {
-  opacity: 0.3;
-  outline: 2px solid gold;
-  outline-offset: -3px;
+.champ-chest-earned img {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	width: 100%;
 }
 
-.champ-img-container {
+.champ-chest-missing img {
+	width: 100%;
+}
+
+#champ-img-container {
 	position: relative;
-	width: 120px;
-	height: 120px;
+	width: 122px;
+	height: 122px;
 }
 
-.chest-icon-container {
+#chest-icon-container {
 	position: absolute;
 	right: 7px;
-	bottom: 5px;
+	bottom: 3px;
 }
 
 #profile-header {
