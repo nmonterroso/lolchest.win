@@ -67,4 +67,6 @@
 
 .navbar form {
 	color: black;
+	position: relative;
+	top: 2px;
 }
