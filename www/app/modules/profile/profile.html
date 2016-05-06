@@ -1,4 +1,4 @@
-<div class="container">
+<div class="profile container">
   <div class="row top-bar">
     <!--Top Search/Sort Bar Content-->
 
@@ -14,9 +14,13 @@
 
     <div class="col-xs-5 col-sm-3 col-md-2 champ"
          ng-repeat="mastery in masteries | startsWith: champNameQuery:'champName' | sortMasteries: selectedSortOrder">
-      <img ng-class="{'missing-chest': mastery.chestIsAvailable, 'has-chest': !mastery.chestIsAvailable}"
-           ng-src="{{mastery.champIconUrl}}">
-      <div class="grade">Grade: {{mastery.highestGrade || 'N/A'}}</div>
+      <div>
+        <img ng-class="{'champ-chest-missing': mastery.chestIsAvailable, 'champ-chest-earned': !mastery.chestIsAvailable}"
+             ng-src="{{mastery.champIconUrl}}" alt="{{mastery.champName}}">
+        <img ng-hide="!mastery.chestIsAvailable" class="icon-chest-missing" src="/assets/img/chest-missing.png" alt="chest missing">
+        <img ng-hide="mastery.chestIsAvailable" class="icon-chest-earned" src="/assets/img/chest-earned.png" alt="chest already earned">
+        {{mastery.highestGrade || 'N/A'}}
+      </div>
     </div>
   </div>
 </div>

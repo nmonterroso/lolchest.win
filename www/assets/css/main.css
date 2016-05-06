@@ -1,19 +1,52 @@
+.main-container {
+	background-color: #02151B;
+	color: white
+}
+
+.home {
+	padding-top: 100px;
+	font-size: large;
+	text-align: center;
+	color: black
+}
+
+.home input {
+	padding: 15px;
+}
+
+.profile {
+	font-size: medium;
+}
+
 .top-bar {
-  padding: 20px
+  padding: 20px;
 }
 
-.missing-chest {
-
+.top-bar input, select {
+	color: black;
+	font-size: small;
 }
 
-.has-chest {
-  opacity: 0.5;
+.champ-chest-missing {
+	outline: 1px solid #053849;
+	outline-offset: -1px;
+}
+
+.champ-chest-earned {
+  opacity: 0.3;
   outline: 2px solid gold;
   outline-offset: -3px;
 }
 
+.icon-chest-missing, .icon-chest-earned {
+	position: absolute;
+	right: 45px;
+	bottom: 45px;
+}
+
 .champ {
   padding-bottom: 10px;
+	position: relative; left: 0; top: 0;
 }
 
 .champ div {

@@ -1,12 +1,15 @@
-<div class="container-fluid">
+<div class="home container">
+
+  <div class="row">
+    <img src="/assets/img/chest-key.png">
+  </div>
 
   <div class="row">
     <!-- Search Bar -->
 
-    <span>Summoner:</span>
-    <form action="{{'#/profile/' + summoner}}">
-      <input type="text" ng-model="summoner" autofocus><br>
-      <input type="submit" value="Search">
+    <form class="search-form" action="{{'#/profile/' + summoner}}">
+      <input class="search-field" size="40" type="text" ng-model="summoner" placeholder="Enter the summoner's name" autofocus>
+      <input class="search-button" type="submit" value="Search">
     </form>
 
   </div>
