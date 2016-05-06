@@ -10,6 +10,20 @@ profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'prof
 		summonerName: $routeParams.summonerName
 	}, function() {
 		$scope.masteries = summonerData.champMastery || [];
+		$scope.summoner = {
+			name: summonerData.name,
+			icon: summonerData.profileIconUrl,
+			earnedChests: 0,
+			totalChests: 0
+		};
+
+		$scope.masteries.forEach(function(m) {
+			++$scope.summoner.totalChests;
+			if (!m.chestIsAvailable) {
+				++$scope.summoner.earnedChests
+			}
+		});
+
 	});
 
 	$scope.sortOptions = {
