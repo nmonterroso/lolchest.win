@@ -22,14 +22,15 @@
     <div class="row">
       <!-- Main Content Grid -->
   
-      <div class="col-xs-5 col-sm-3 col-md-2 champ"
+      <div class="col-xs-5 col-sm-3 col-md-2" id="champ"
            ng-repeat="mastery in masteries | startsWith: champNameQuery:'champName' | sortMasteries: selectedSortOrder">
-        <div class="champ-img-container">
-          <img ng-class="{'champ-chest-missing': mastery.chestIsAvailable, 'champ-chest-earned': !mastery.chestIsAvailable}"
-               ng-src="{{mastery.champIconUrl}}" alt="{{mastery.champName}}">
-          <div class="chest-icon-container">
-            <img ng-hide="!mastery.chestIsAvailable" class="icon-chest-missing" src="/assets/img/chest-missing.png" alt="chest missing">
-            <img ng-hide="mastery.chestIsAvailable" class="icon-chest-earned" src="/assets/img/chest-earned.png" alt="chest already earned">
+        <div id="champ-img-container">
+          <div ng-class="{'champ-chest-missing': mastery.chestIsAvailable, 'champ-chest-earned': !mastery.chestIsAvailable}">
+            <img ng-src="{{mastery.champIconUrl}}" title="{{mastery.champName}}">
+          </div>
+          <div id="chest-icon-container">
+            <img ng-hide="!mastery.chestIsAvailable" id="icon-chest-missing" src="/assets/img/chest-missing.png" title="No chest for {{mastery.champName}} yet">
+            <img ng-hide="mastery.chestIsAvailable" id="icon-chest-earned" src="/assets/img/chest-earned.png" title="Chest already earned for {{mastery.champName}}">
           </div>
         </div>
       </div>
