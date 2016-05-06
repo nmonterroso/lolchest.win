@@ -1,4 +1,32 @@
 <div class="profile">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{{'#/'}}">
+          <img src="/assets/img/chest-key.png" />
+          LoLChest.win
+        </a>
+      </div>
+      <form class="navbar-form navbar-left" action="{{'#/profile/'+summonerName}}">
+        <input class="search-field" type="text" ng-model="summonerName" size="30" placeholder="Summoner Name" value="{{summoner.name}}">
+        <input class="search-button" type="submit" value="Search">
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="{{'#/profile/'+summoner.name}}" class="dropdown-toggle" data-toggle="dropdown">{{selectedSortOrder.text}} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="s in sortOptions">
+              <a href ng-click="setSortOrder($index)">{{s.text}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-right" onsubmit="return false;">
+        <input ng-model="champNameQuery" placeholder="Champion Name" size="30">
+      </form>
+    </div>
+  </nav>
+  <h3>LoLChest.win</h3>
   <div id="profile-header">
     <div class="container">
       <profile-header name="summoner.name"
@@ -6,16 +34,6 @@
                       total-chests="summoner.totalChests"
                       earned-chests="summoner.earnedChests">
       </profile-header>
-  
-      <div class="row top-bar">
-        <!--Top Search/Sort Bar Content-->
-  
-        Search: <input ng-model="champNameQuery">
-        Sort by:
-        <select ng-model="selectedSortOrder" ng-options="y.text for (x, y) in sortOptions">
-        </select>
-  
-      </div>
     </div>
   </div>
   <div class="container" id="profile-masteries">
