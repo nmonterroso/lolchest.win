@@ -57,8 +57,36 @@
 
 #chest-icon-container {
 	position: absolute;
-	right: 7px;
-	bottom: 3px;
+	/*left: 6px;*/
+	right: 36px;
+	bottom: 4px;
+}
+
+#chest-icon-container img {
+	width: 120%;
+	height: 120%;
+}
+
+#grade-container {
+	position: absolute;
+	right: 30px;
+	bottom: 30px;
+}
+
+#grade-circle {
+	padding-top: 1px;
+	padding-left: 1px;
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	background: black;
+	-moz-border-radius: 13px;
+	-webkit-border-radius: 13px;
+	border-radius: 13px;
+	border: 1px solid darkgoldenrod;
+	font-size: x-small;
+	text-align: center;
+	vertical-align: middle;
 }
 
 #profile-header {
