@@ -28,28 +28,23 @@ profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'prof
 
 	$scope.sortOptions = {
 		alpha: {
-			text: 'Champion',
+			text: 'Champion Name',
 			reverse: false,
 			sortType: profileConst.sortTypeChamp
 		},
 		chestFirst: {
-			text: 'Chests Awarded',
+			text: 'Chest Earned',
 			reverse: false,
 			sortType: profileConst.sortTypeChest
 		},
 		chestLast: {
-			text: 'Chests Available',
+			text: 'Chest Available',
 			reverse: true,
 			sortType: profileConst.sortTypeChest
 		},
 		gradeBest: {
-			text: 'Best Grades',
+			text: 'Best Grade',
 			reverse: false,
-			sortType: profileConst.sortTypeGrade
-		},
-		gradeWorst: {
-			text: 'Worst Grades',
-			reverse: true,
 			sortType: profileConst.sortTypeGrade
 		}
 	};
