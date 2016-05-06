@@ -1,20 +1,23 @@
-<div class="container">
-  <profile-header name="summoner.name"
-                  icon="summoner.icon"
-                  total-chests="summoner.totalChests"
-                  earned-chests="summoner.earnedChests">
-  </profile-header>
+<div id="profile-header">
+  <div class="container">
+    <profile-header name="summoner.name"
+                    icon="summoner.icon"
+                    total-chests="summoner.totalChests"
+                    earned-chests="summoner.earnedChests">
+    </profile-header>
 
-  <div class="row top-bar">
-    <!--Top Search/Sort Bar Content-->
+    <div class="row top-bar">
+      <!--Top Search/Sort Bar Content-->
 
-    Search: <input ng-model="champNameQuery">
-    Sort by:
-    <select ng-model="selectedSortOrder" ng-options="y.text for (x, y) in sortOptions">
-    </select>
+      Search: <input ng-model="champNameQuery">
+      Sort by:
+      <select ng-model="selectedSortOrder" ng-options="y.text for (x, y) in sortOptions">
+      </select>
 
+    </div>
   </div>
-
+</div>
+<div class="container" id="profile-masteries">
   <div class="row">
     <!-- Main Content Grid -->
 
