@@ -2,6 +2,8 @@
 **/debug
 
 **.iml
+**.ipr
+**.iws
 
 **/node_modules
 **/bower_components
