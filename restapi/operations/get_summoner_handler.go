@@ -20,7 +20,12 @@ func NewGetSummonerHandler(bridge riotapi.RiotApiBridge) GetSummonerHandler {
 }
 
 func (h *getSummonerHandler) Handle(params GetSummonerParams) middleware.Responder {
-	summonerData, err := h.bridge.GetSummonerData(params.Name)
+	refresh := false
+	if params.Refresh != nil {
+		refresh = *params.Refresh
+	}
+
+	summonerData, err := h.bridge.GetSummonerData(params.Region, params.Name, refresh)
 
 	if err != nil {
 		switch err.(type) {

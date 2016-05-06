@@ -15,12 +15,25 @@ import (
 )
 
 type RiotApiBridge interface {
-	GetSummonerData(name string) (*models.Summoner, error)
+	GetSummonerData(region string, name string, refresh bool) (*models.Summoner, error)
 }
 
 type riotAPIBridge struct {
 	auth  runtime.ClientAuthInfoWriter
 	cache Cache
+}
+
+func regionToPlatformID(region string) string {
+	switch region {
+	case "oce":
+		return "oc1"
+	case "eune":
+		return "eun1"
+	case "kr", "ru":
+		return region
+	}
+
+	return fmt.Sprintf("%s1", region) //TODO: there is LAN1 and LAN2 O.o
 }
 
 func NewRiotAPI(apiKey string) RiotApiBridge {
@@ -30,23 +43,23 @@ func NewRiotAPI(apiKey string) RiotApiBridge {
 	}
 }
 
-func (api *riotAPIBridge) GetSummonerData(name string) (*models.Summoner, error) {
-	urlBase, err := api.staticAssetURLBase()
+func (api *riotAPIBridge) GetSummonerData(region string, name string, refresh bool) (*models.Summoner, error) {
+	urlBase, err := api.staticAssetURLBase(region)
 	if err != nil {
 		return nil, err
 	}
 
-	champions, err := api.getChampions(urlBase)
+	champions, err := api.getChampions(region, urlBase)
 	if err != nil {
 		return nil, err
 	}
 
-	summoner, err := api.getSummoner(name, urlBase)
+	summoner, err := api.getSummoner(region, name, urlBase)
 	if err != nil {
 		return nil, err
 	}
 
-	api.fillMasteries(*summoner.ID, champions)
+	api.fillMasteries(regionToPlatformID(region), *summoner.ID, champions)
 	if err != nil {
 		return nil, err
 	}
@@ -58,9 +71,10 @@ func (api *riotAPIBridge) GetSummonerData(name string) (*models.Summoner, error)
 	return summoner, nil
 }
 
-func (api *riotAPIBridge) getChampions(iconURLBase string) (map[int64]*models.ChampionMastery, error) {
-	data, err := api.cache.GetOrSet("championList", 24*time.Hour, func() (interface{}, error) {
-		resp, err := client.Default.Operations.GetChampionData(nil, api.auth)
+func (api *riotAPIBridge) getChampions(region string, iconURLBase string) (map[int64]*models.ChampionMastery, error) {
+	data, err := api.cache.GetOrSet(fmt.Sprintf("championList-%s", region), 24*time.Hour, func() (interface{}, error) {
+		params := clientops.NewGetChampionDataParams().WithRegion(region)
+		resp, err := client.Default.Operations.GetChampionData(params, api.auth)
 
 		if err != nil {
 			return nil, err
@@ -91,9 +105,9 @@ func (api *riotAPIBridge) getChampions(iconURLBase string) (map[int64]*models.Ch
 	return champions, nil
 }
 
-func (api *riotAPIBridge) getSummoner(name string, urlBase string) (*models.Summoner, error) {
-	data, err := api.cache.GetOrSet(fmt.Sprintf("summoner-%s", name), 5*24*time.Hour, func() (interface{}, error) {
-		params := clientops.NewGetSummonerProfileParams().WithSummonerNames(name)
+func (api *riotAPIBridge) getSummoner(region string, name string, urlBase string) (*models.Summoner, error) {
+	data, err := api.cache.GetOrSet(fmt.Sprintf("summoner-%s-%s", region, name), 5*24*time.Hour, func() (interface{}, error) {
+		params := clientops.NewGetSummonerProfileParams().WithSummonerNames(name).WithRegion(region)
 		resp, err := client.Default.Operations.GetSummonerProfile(params, api.auth)
 
 		// TODO: cache something on 404?
@@ -124,9 +138,9 @@ func (api *riotAPIBridge) getSummoner(name string, urlBase string) (*models.Summ
 	}, nil
 }
 
-func (api *riotAPIBridge) fillMasteries(summonerID int64, champions map[int64]*models.ChampionMastery) error {
-	data, err := api.cache.GetOrSet(fmt.Sprintf("masteries-%d", summonerID), 3*time.Hour, func() (interface{}, error) {
-		params := clientops.NewGetSummonerChampionMasteryParams().WithSummonerID(summonerID)
+func (api *riotAPIBridge) fillMasteries(platformID string, summonerID int64, champions map[int64]*models.ChampionMastery) error {
+	data, err := api.cache.GetOrSet(fmt.Sprintf("masteries-%s-%d", platformID, summonerID), 3*time.Hour, func() (interface{}, error) {
+		params := clientops.NewGetSummonerChampionMasteryParams().WithSummonerID(summonerID).WithPlatformID(platformID)
 		resp, err := client.Default.Operations.GetSummonerChampionMastery(params, api.auth)
 
 		if err != nil {
@@ -155,9 +169,10 @@ func (api *riotAPIBridge) fillMasteries(summonerID int64, champions map[int64]*m
 	return nil
 }
 
-func (api *riotAPIBridge) staticAssetURLBase() (string, error) {
-	data, err := api.cache.GetOrSet("staticAssetURL", 24*time.Hour, func() (interface{}, error) {
-		resp, err := client.Default.Operations.GetStaticAssetVersions(nil, api.auth)
+func (api *riotAPIBridge) staticAssetURLBase(region string) (string, error) {
+	data, err := api.cache.GetOrSet(fmt.Sprintf("staticAssetURL-%s", region), 24*time.Hour, func() (interface{}, error) {
+		params := clientops.NewGetStaticAssetVersionsParams().WithRegion(region)
+		resp, err := client.Default.Operations.GetStaticAssetVersions(params, api.auth)
 
 		if err != nil {
 			fmt.Println(fmt.Sprintf("%s %v", reflect.TypeOf(err), err))
