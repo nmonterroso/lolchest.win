@@ -27,6 +27,11 @@
 	font-size: small;
 }
 
+.champ {
+	height: 120px;
+	width: 120px;
+}
+
 .champ-chest-missing {
 	outline: 1px solid #053849;
 	outline-offset: -1px;
@@ -38,24 +43,16 @@
   outline-offset: -3px;
 }
 
-.icon-chest-missing, .icon-chest-earned {
+.champ-img-container {
+	position: relative;
+	width: 120px;
+	height: 120px;
+}
+
+.chest-icon-container {
 	position: absolute;
-	right: 45px;
-	bottom: 45px;
-}
-
-.champ {
-  padding-bottom: 10px;
-	position: relative; left: 0; top: 0;
-}
-
-.champ div {
-	text-align: center;
-}
-
-.champ img {
-	display: block;
-	margin: 0 auto;
+	right: 7px;
+	bottom: 5px;
 }
 
 #profile-header {
