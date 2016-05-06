@@ -119,7 +119,7 @@ body {
 	}
 }
 
-@media (max-width: 980px) {
+@media (max-width: 910px) {
 	.navbar-header {
 		float: none;
 	}
