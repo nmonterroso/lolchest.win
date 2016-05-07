@@ -10,7 +10,7 @@ basePath: /
 produces:
   - application/json
 paths:
-  /summoner/{region}/{name}:
+  /{region}/{name}:
     get:
       operationId: getSummoner
       summary: get data for a summoner
@@ -29,7 +29,6 @@ paths:
           type: string
           default: na
           enum:
-            - na
             - br
             - eune
             - euw
@@ -37,6 +36,7 @@ paths:
             - kr
             - lan
             - las
+            - na
             - oce
             - ru
             - tr

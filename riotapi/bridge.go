@@ -3,11 +3,12 @@ package riotapi
 import (
 	"errors"
 	"fmt"
-	"reflect"
 	"time"
 
 	runtime "github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
+
 	"github.com/nmonterroso/lolchest.win/models"
 	"github.com/nmonterroso/lolchest.win/riotapi/client"
 	clientops "github.com/nmonterroso/lolchest.win/riotapi/client/operations"
@@ -19,27 +20,37 @@ type RiotApiBridge interface {
 }
 
 type riotAPIBridge struct {
-	auth  runtime.ClientAuthInfoWriter
-	cache Cache
+	auth    runtime.ClientAuthInfoWriter
+	clients map[string]*client.Riot
+	cache   Cache
 }
 
-func regionToPlatformID(region string) string {
-	switch region {
-	case "oce":
-		return "oc1"
-	case "eune":
-		return "eun1"
-	case "kr", "ru":
-		return region
-	}
-
-	return fmt.Sprintf("%s1", region) //TODO: there is LAN1 and LAN2 O.o
+var regions = []string{
+	"br",
+	"eune",
+	"euw",
+	"jp",
+	"kr",
+	"lan",
+	"las",
+	"na",
+	"oce",
+	"ru",
+	"tr",
 }
 
 func NewRiotAPI(apiKey string) RiotApiBridge {
+	clients := make(map[string]*client.Riot)
+	for _, r := range regions {
+		clients[r] = client.New(
+			httptransport.New(fmt.Sprintf("%s.api.pvp.net", r), "/", []string{"https"}),
+			strfmt.Default)
+	}
+
 	return &riotAPIBridge{
-		auth:  httptransport.APIKeyAuth("api_key", "query", apiKey),
-		cache: NewCache(),
+		auth:    httptransport.APIKeyAuth("api_key", "query", apiKey),
+		clients: clients,
+		cache:   NewCache(),
 	}
 }
 
@@ -59,7 +70,7 @@ func (api *riotAPIBridge) GetSummonerData(region string, name string, refresh bo
 		return nil, err
 	}
 
-	api.fillMasteries(regionToPlatformID(region), *summoner.ID, champions)
+	api.fillMasteries(region, *summoner.ID, champions)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +119,7 @@ func (api *riotAPIBridge) getChampions(region string, iconURLBase string) (map[i
 func (api *riotAPIBridge) getSummoner(region string, name string, urlBase string) (*models.Summoner, error) {
 	data, err := api.cache.GetOrSet(fmt.Sprintf("summoner-%s-%s", region, name), 5*24*time.Hour, func() (interface{}, error) {
 		params := clientops.NewGetSummonerProfileParams().WithSummonerNames(name).WithRegion(region)
-		resp, err := client.Default.Operations.GetSummonerProfile(params, api.auth)
+		resp, err := api.clientFor(region).Operations.GetSummonerProfile(params, api.auth)
 
 		// TODO: cache something on 404?
 		if err != nil {
@@ -138,10 +149,11 @@ func (api *riotAPIBridge) getSummoner(region string, name string, urlBase string
 	}, nil
 }
 
-func (api *riotAPIBridge) fillMasteries(platformID string, summonerID int64, champions map[int64]*models.ChampionMastery) error {
+func (api *riotAPIBridge) fillMasteries(region string, summonerID int64, champions map[int64]*models.ChampionMastery) error {
+	platformID := regionToPlatformID(region)
 	data, err := api.cache.GetOrSet(fmt.Sprintf("masteries-%s-%d", platformID, summonerID), 3*time.Hour, func() (interface{}, error) {
 		params := clientops.NewGetSummonerChampionMasteryParams().WithSummonerID(summonerID).WithPlatformID(platformID)
-		resp, err := client.Default.Operations.GetSummonerChampionMastery(params, api.auth)
+		resp, err := api.clientFor(region).Operations.GetSummonerChampionMastery(params, api.auth)
 
 		if err != nil {
 			return nil, err
@@ -172,10 +184,9 @@ func (api *riotAPIBridge) fillMasteries(platformID string, summonerID int64, cha
 func (api *riotAPIBridge) staticAssetURLBase(region string) (string, error) {
 	data, err := api.cache.GetOrSet(fmt.Sprintf("staticAssetURL-%s", region), 24*time.Hour, func() (interface{}, error) {
 		params := clientops.NewGetStaticAssetVersionsParams().WithRegion(region)
-		resp, err := client.Default.Operations.GetStaticAssetVersions(params, api.auth)
+		resp, err := api.clientFor(region).Operations.GetStaticAssetVersions(params, api.auth)
 
 		if err != nil {
-			fmt.Println(fmt.Sprintf("%s %v", reflect.TypeOf(err), err))
 			return "", err
 		}
 
@@ -187,4 +198,25 @@ func (api *riotAPIBridge) staticAssetURLBase(region string) (string, error) {
 	}
 
 	return fmt.Sprintf("http://ddragon.leagueoflegends.com/cdn/%s/img", data.(string)), nil
+}
+
+func (api *riotAPIBridge) clientFor(region string) *client.Riot {
+	return api.clients[region] // validated by swagger spec, kinda ghetto but meh
+}
+
+func regionToPlatformID(region string) string {
+	switch region {
+	case "oce":
+		return "oc1"
+	case "eune":
+		return "eun1"
+	case "kr", "ru":
+		return region
+	case "lan":
+		return "lan1"
+	case "las":
+		return "lan2"
+	}
+
+	return fmt.Sprintf("%s1", region) //TODO: there is LAN1 and LAN2 O.o
 }

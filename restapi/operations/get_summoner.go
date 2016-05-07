@@ -27,7 +27,7 @@ func NewGetSummoner(ctx *middleware.Context, handler GetSummonerHandler) *GetSum
 	return &GetSummoner{Context: ctx, Handler: handler}
 }
 
-/*GetSummoner swagger:route GET /summoner/{region}/{name} getSummoner
+/*GetSummoner swagger:route GET /{region}/{name} getSummoner
 
 get data for a summoner
 
