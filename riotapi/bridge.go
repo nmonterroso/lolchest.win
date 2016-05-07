@@ -182,9 +182,9 @@ func (api *riotAPIBridge) fillMasteries(region string, summonerID int64, champio
 }
 
 func (api *riotAPIBridge) staticAssetURLBase(region string) (string, error) {
-	data, err := api.cache.GetOrSet(fmt.Sprintf("staticAssetURL-%s", region), 24*time.Hour, func() (interface{}, error) {
+	data, err := api.cache.GetOrSet(fmt.Sprintf("staticAssetURL"), 24*time.Hour, func() (interface{}, error) {
 		params := clientops.NewGetStaticAssetVersionsParams().WithRegion(region)
-		resp, err := api.clientFor(region).Operations.GetStaticAssetVersions(params, api.auth)
+		resp, err := client.Default.Operations.GetStaticAssetVersions(params, api.auth)
 
 		if err != nil {
 			return "", err
