@@ -1,19 +1,42 @@
+/*-----------------------------
+Main Page
+-----------------------------*/
+
 .main-container {
 	background-color: #02151B;
 	color: white;
 	font-family: 'PT Sans', sans-serif;
 }
 
-.home {
-	padding-top: 100px;
-	font-size: large;
+/*-----------------------------
+Home Page
+-----------------------------*/
+
+#home-container {
 	text-align: center;
-	color: black
 }
 
-.home input {
-	padding: 15px;
+#home-img {
+	padding-top: 100px;
 }
+
+#search-container {
+	padding-left: 20px;
+}
+
+#search-container input {
+	padding: 0 15px;
+	font-size: 20pt;
+	height: 42px;
+}
+
+#search-container button {
+	height: 42px;
+}
+
+/*-----------------------------
+Profile Page
+-----------------------------*/
 
 .profile {
 	font-size: medium;
