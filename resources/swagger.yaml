@@ -10,7 +10,7 @@ basePath: /
 produces:
   - application/json
 paths:
-  /summoner/{name}:
+  /{region}/{name}:
     get:
       operationId: getSummoner
       summary: get data for a summoner
@@ -22,6 +22,24 @@ paths:
           description: name of the summoner
           required: true
           type: string
+        - name: region
+          in: path
+          description: summoner region
+          required: true
+          type: string
+          default: na
+          enum:
+            - br
+            - eune
+            - euw
+            - jp
+            - kr
+            - lan
+            - las
+            - na
+            - oce
+            - ru
+            - tr
         - name: refresh
           in: query
           description: whether or not to refresh the data
