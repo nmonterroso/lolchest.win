@@ -49,7 +49,7 @@ profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'prof
 		}
 	];
 
-	$scope.selectedSortOrder = $scope.sortOptions[2];
+	$scope.selectedSortOrder = $scope.sortOptions[1];
 
 	$scope.setSortOrder = function(index) {
 		$scope.selectedSortOrder = $scope.sortOptions[index];
