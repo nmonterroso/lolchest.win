@@ -4,12 +4,17 @@
 
 var searchBar = angular.module('lolApp.searchBar');
 
-searchBar.directive("searchBar", function() {
+searchBar.directive("searchBar", ['$location', function($location) {
 	return {
 		restrict: 'E',
 		scope: {
 			formClasses: "@"
 		},
-		templateUrl: '/app/shared/search-bar/search-bar.html'
+		templateUrl: '/app/shared/search-bar/search-bar.html',
+		link: function(scope) {
+			scope.navigateTo = function(route) {
+				$location.path(route)
+			};
+		}
 	};
-});
+}]);
