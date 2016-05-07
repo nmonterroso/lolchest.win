@@ -75,7 +75,7 @@ Profile Page
 }
 
 #profile-header {
-	padding: 15px 0 30px;
+	padding: 15px 0;
 	background: linear-gradient(#9CE4F5, #2F626F);
 }
 
@@ -93,6 +93,7 @@ Profile Page
 					#eaeaea 70%),
 			url(/assets/img/ionia.jpg) repeat-x;
 	height: 100vh;
+	padding-top: 15px;
 }
 
 /**--- Nav Bar ---*/
@@ -108,8 +109,6 @@ Profile Page
 
 .navbar form {
 	color: black;
-	position: relative;
-	top: 2px;
 }
 
 body {

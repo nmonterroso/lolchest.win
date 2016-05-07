@@ -1,6 +1,6 @@
-<form action="{{selectedRegion.tag.toLowerCase() + '/' + summoner}}" ng-controller="SearchBarCtrl">
+<form action="{{selectedRegion.tag.toLowerCase() + '/' + summoner}}" ng-class="formClasses" ng-controller="SearchBarCtrl">
   <div class="input-group">
-    <input type="text" class="form-control" ng-model="summoner" placeholder="Enter summoner name">
+    <input type="text" class="form-control" ng-model="summoner" placeholder="summoner name">
 
     <!--<div class="input-group-btn">-->
       <!--<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
