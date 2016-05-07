@@ -127,7 +127,7 @@ func (o *GetSummonerParams) bindRegion(rawData []string, hasKey bool, formats st
 
 func (o *GetSummonerParams) validateRegion(formats strfmt.Registry) error {
 
-	if err := validate.Enum("region", "path", o.Region, []interface{}{"na", "br", "eune", "euw", "jp", "kr", "lan", "las", "oce", "ru", "tr"}); err != nil {
+	if err := validate.Enum("region", "path", o.Region, []interface{}{"br", "eune", "euw", "jp", "kr", "lan", "las", "na", "oce", "ru", "tr"}); err != nil {
 		return err
 	}
 
