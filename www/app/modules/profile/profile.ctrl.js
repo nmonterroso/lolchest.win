@@ -7,6 +7,7 @@ var profileMod = angular.module('lolApp.profile');
 profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'profileConst', function($scope, $routeParams, Summoner, profileConst) {
 
 	var summonerData = Summoner.get({
+		region: "na",
 		summonerName: $routeParams.summonerName
 	}, function() {
 		$scope.masteries = summonerData.champMastery || [];
@@ -23,7 +24,6 @@ profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'prof
 				++$scope.summoner.earnedChests
 			}
 		});
-
 	});
 
 	$scope.sortOptions = [
