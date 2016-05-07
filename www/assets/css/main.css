@@ -1,96 +1,53 @@
+/*-----------------------------
+Main Page
+-----------------------------*/
+
 .main-container {
 	background-color: #02151B;
 	color: white;
 	font-family: 'PT Sans', sans-serif;
 }
 
-.home {
+/*-----------------------------
+Home Page
+-----------------------------*/
+
+#home-container {
+	text-align: center;
+}
+
+#home-img {
 	padding-top: 100px;
-	font-size: large;
-	text-align: center;
-	color: black
 }
 
-.home input {
-	padding: 15px;
+#search-container {
+	padding-left: 20px;
 }
 
-.profile {
-	font-size: medium;
+#search-container input {
+	padding: 0 15px;
+	font-size: 20pt;
+	height: 42px;
 }
 
-.top-bar {
-  padding: 20px;
+#search-container button {
+	height: 42px;
 }
 
-.top-bar input, select {
-	color: black;
-	font-size: small;
-}
+/*-----------------------------
+Profile Page
+-----------------------------*/
 
-#champ {
-	height: 122px;
-	width: 122px;
-}
-
-.champ-chest-earned, .champ-chest-missing {
-  outline: 1px solid #053849;
-  outline-offset: -1px;
-	padding: 1px;
-}
-
-.champ-chest-earned img {
-	-webkit-filter: grayscale(100%);
-	filter: grayscale(100%);
-	width: 100%;
-}
-
-.champ-chest-missing img {
-	width: 100%;
-}
-
-#champ-img-container {
-	position: relative;
-	width: 122px;
-	height: 122px;
-}
-
-#chest-icon-container {
-	position: absolute;
-	/*left: 6px;*/
-	right: 36px;
-	bottom: 3px;
-}
-
-#chest-icon-container img {
-	width: 130%;
-	height: 130%;
-}
-
-#grade-container {
-	position: absolute;
-	right: 28px;
-	bottom: 28px;
-}
-
-#grade-circle {
-	position: absolute;
-	width: 24px;
-	height: 24px;
-	background: black;
-	-moz-border-radius: 12px;
-	-webkit-border-radius: 12px;
-	border-radius: 12px;
-	border: 1px solid darkgoldenrod;
-	font-size: 10pt;
-	text-align: center;
-	vertical-align: middle;
+#profile {
+	font-size: 14pt;
 }
 
 #profile-header {
-    margin-bottom: 15px;
-    padding: 15px 0;
+	margin-bottom: 15px;
+	padding: 15px 0;
 }
+
+/**--- Nav Bar ---*/
 
 .navbar-brand img {
 	display: inline;
@@ -154,4 +111,69 @@ body {
 	.collapse.in{
 		display:block !important;
 	}
+}
+
+/**--- Champ Icons ---*/
+
+#champ {
+	height: 122px;
+	width: 122px;
+}
+
+.champ-chest-earned, .champ-chest-missing {
+  outline: 1px solid #053849;
+  outline-offset: -1px;
+	padding: 1px;
+}
+
+.champ-chest-earned img {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	width: 100%;
+}
+
+.champ-chest-missing img {
+	width: 100%;
+}
+
+#champ-img-container {
+	position: relative;
+	width: 122px;
+	height: 122px;
+}
+
+/**--- Chest Icons ---*/
+
+#chest-icon-container {
+	position: absolute;
+	/*left: 6px;*/
+	right: 36px;
+	bottom: 3px;
+}
+
+#chest-icon-container img {
+	width: 130%;
+	height: 130%;
+}
+
+/**--- Grade ---*/
+
+#grade-container {
+	position: absolute;
+	right: 28px;
+	bottom: 28px;
+}
+
+#grade-circle {
+	position: absolute;
+	width: 24px;
+	height: 24px;
+	background: black;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	border: 1px solid darkgoldenrod;
+	font-size: 10pt;
+	text-align: center;
+	vertical-align: middle;
 }
