@@ -9,6 +9,37 @@ Main Page
 }
 
 /*-----------------------------
+Shared
+-----------------------------*/
+
+.btn-secondary {
+	border-radius: 0;
+	color: black;
+}
+
+.dropdown-item {
+	display: block;
+	padding: 3px 5px;
+	clear: both;
+	font-weight: 400;
+	line-height: 1.5;
+	color: black;
+	text-align: inherit;
+	white-space: nowrap;
+	background: 0 0;
+	border: 0;
+}
+
+.dropdown-item:hover {
+	background-color: #f5f5f5;
+	text-decoration: none;
+}
+
+input {
+	padding: 0 10px;
+}
+
+/*-----------------------------
 Home Page
 -----------------------------*/
 
@@ -20,18 +51,19 @@ Home Page
 	padding-top: 100px;
 }
 
-#search-container {
-	padding-left: 20px;
-}
-
-#search-container input {
-	padding: 0 15px;
+#home-search input {
 	font-size: 20pt;
 	height: 42px;
 }
 
-#search-container button {
+#home-search button {
 	height: 42px;
+}
+
+#home-search  {
+	width: 500px;
+	display: inline-block;
+	margin: 0 auto;
 }
 
 /*-----------------------------
@@ -48,6 +80,10 @@ Profile Page
 }
 
 /**--- Nav Bar ---*/
+
+.navbar-search {
+	width: 450px;
+}
 
 .navbar-brand img {
 	display: inline;

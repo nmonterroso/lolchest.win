@@ -2,7 +2,7 @@
 
 /* App Module */
 
-var lolApp = angular.module('lolApp', ['ngRoute', 'lolFilters', 'lolApp.profile', 'lolApp.home']);
+var lolApp = angular.module('lolApp', ['ngRoute', 'lolFilters', 'lolApp.profile', 'lolApp.home', 'lolApp.searchBar']);
 
 lolApp.config(['$locationProvider', '$routeProvider',
 	function($locationProvider, $routeProvider) {

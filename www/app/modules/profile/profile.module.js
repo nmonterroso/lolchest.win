@@ -14,7 +14,7 @@ profileMod.constant('profileConst', {
 profileMod.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
-			.when('/profile/:summonerName', {
+			.when('/:region/:summonerName', {
 				templateUrl: 'app/modules/profile/profile.html',
 				controller: 'ProfileCtrl'
 			})

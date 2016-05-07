@@ -7,7 +7,7 @@ var profileMod = angular.module('lolApp.profile');
 profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'profileConst', function($scope, $routeParams, Summoner, profileConst) {
 
 	var summonerData = Summoner.get({
-		region: "na",
+		region: $routeParams.region,
 		summonerName: $routeParams.summonerName
 	}, function() {
 		$scope.masteries = summonerData.champMastery || [];
