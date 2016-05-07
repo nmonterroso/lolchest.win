@@ -43,8 +43,25 @@ Profile Page
 }
 
 #profile-header {
-	margin-bottom: 15px;
-	padding: 15px 0;
+	padding: 15px 0 30px;
+	background: #02151B;
+}
+
+#profile-masteries {
+	/*background: #02151B ;*/
+	background:
+			-webkit-linear-gradient(
+					top,
+					rgba(255, 255, 255, 0) 0%,
+					rgba(2, 21, 27, 1) 53%),
+			url(/assets/img/zaun.jpg) no-repeat;
+	background:
+			-moz-linear-gradient(
+					top,
+					rgba(255,255,255,0) 0%,
+					rgba(2, 21, 27, 1) 53%),
+			url(/assets/img/zaun.jpg) no-repeat;
+	height: 100vh;
 }
 
 /**--- Nav Bar ---*/
