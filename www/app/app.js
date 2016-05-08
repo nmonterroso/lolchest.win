@@ -19,7 +19,6 @@ lolApp.config(['$locationProvider', '$routeProvider',
 
 lolApp.controller('AppController', ['$rootScope', function($rootScope) {
 	$rootScope.$on('$routeChangeSuccess', function (event, currentRoute) {
-		console.log("ROUTE CHANGE", event, currentRoute);
 		switch(currentRoute.templateUrl) {
 			case 'app/modules/home/home.html':
 				$rootScope.bodyClass = 'home-view';
