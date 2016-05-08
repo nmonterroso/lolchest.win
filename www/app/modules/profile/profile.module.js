@@ -19,16 +19,3 @@ profileMod.config(['$routeProvider',
 				controller: 'ProfileCtrl'
 			})
 	}]);
-
-profileMod.directive("profileHeader", function() {
-	return {
-		restrict: 'E',
-		scope: {
-			name: '=',
-			icon: '=',
-			earnedChests: '=',
-			totalChests: '='
-		},
-		templateUrl: '/app/modules/profile/header/profile-header.html'
-	};
-});

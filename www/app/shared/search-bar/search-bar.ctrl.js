@@ -2,7 +2,7 @@
 
 /* Profile Controller */
 
-var searchBar = angular.module('lolApp.searchBar', []);
+var searchBar = angular.module('lolSearchBar', []);
 
 searchBar.controller('SearchBarCtrl', ['$scope', function($scope) {
 
