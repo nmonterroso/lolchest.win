@@ -3,9 +3,9 @@ Main Page
 -----------------------------*/
 
 .main-container {
-	background-color: #eaeaea;
 	color: white;
 	font-family: 'PT Sans', sans-serif;
+	background-color: #eaeaea;
 }
 
 /*-----------------------------
@@ -91,18 +91,7 @@ Profile Page
 }
 
 #profile-masteries {
-	background:
-			-webkit-linear-gradient(
-					top,
-					rgba(255, 255, 255, 0) 40%,
-					#eaeaea 70%),
-			url(/assets/img/ionia.jpg) repeat-x;
-	background:
-			-moz-linear-gradient(
-					top,
-					rgba(255,255,255,0) 40%,
-					#eaeaea 70%),
-			url(/assets/img/ionia.jpg) repeat-x;
+	background: url(/assets/img/background.jpg) no-repeat;
 	height: 100vh;
 	padding-top: 15px;
 }
