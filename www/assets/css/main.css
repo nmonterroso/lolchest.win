@@ -157,11 +157,18 @@ Profile Page
 }
 
 @media (max-width: 1000px) {
+	.navbar-title {
+		display: none;
+	}
+}
+
+@media (max-width: 950px) {
+	.navbar-title {
+		display: inline;
+	}
+
 	.navbar-header {
 		float: none;
-	}
-	.navbar-left,.navbar-right {
-		/*float: none !important;*/
 	}
 	.navbar-toggle {
 		display: block;
@@ -178,11 +185,7 @@ Profile Page
 		display: none!important;
 	}
 	.navbar-nav {
-		/*float: none!important;*/
-		margin-top: 7.5px;
-	}
-	.navbar-nav>li {
-		/*float: none;*/
+		margin-top: 7px;
 	}
 	.navbar-nav>li>a {
 		padding-top: 10px;
