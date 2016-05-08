@@ -11,15 +11,18 @@ To start a local instance of lolchest, after setting up [Go](https://golang.org/
 
 ```bash
 $gopath> go get github.com/nmonterroso/lolchest.win
-$gopath> cd src/github.com/nmonterroso/lolchest.win
+$gopath> cd src/github.com/nmonterroso/lolchest.win/www
+www> bower install
+www> cd ../
 lolchest.win> PORT=8080 RIOT_API_KEY=<api key> go run cmd/lolchest-win-server/main.go
 ```
 
-This will start the bridge to Riot's API authenticated with the environment var `RIOT_API_KEY`. There's also a server that can be used during development to serve the client app, whose code lives in `www`:
+This will start the bridge to Riot's API authenticated with the environment var `RIOT_API_KEY`. 
+
+There's also a simple file server that can be used during development to serve the client app. This helps avoid the need for having an nginx (or other) dedicated webserver:
 
 ```bash
-www> bower install
-lolchest.win>PORT=8081 WWW_ROOT=/path/to//www go run cmd/www-dev-server/main.go
+lolchest.win> PORT=8081 WWW_ROOT=/path/to//www go run cmd/www-dev-server/main.go
 ```
 
 The app is now viewable on `localhost:8081`. 
