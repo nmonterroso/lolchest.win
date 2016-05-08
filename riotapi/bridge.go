@@ -16,13 +16,14 @@ import (
 )
 
 type RiotApiBridge interface {
-	GetSummonerData(region string, name string, refresh bool) (*models.Summoner, error)
+	GetSummonerData(region string, name string, refresh bool) (*models.Summoner, *models.GatewayError)
 }
 
 type riotAPIBridge struct {
-	auth    runtime.ClientAuthInfoWriter
-	clients map[string]*client.Riot
-	cache   Cache
+	auth             runtime.ClientAuthInfoWriter
+	clients          map[string]*client.Riot
+	cache            Cache
+	rateLimitedUntil time.Time
 }
 
 var regions = []string{
@@ -39,6 +40,8 @@ var regions = []string{
 	"tr",
 }
 
+var errRateLimited = errors.New("rate limited")
+
 func NewRiotAPI(apiKey string) RiotApiBridge {
 	clients := make(map[string]*client.Riot)
 	for _, r := range regions {
@@ -48,31 +51,32 @@ func NewRiotAPI(apiKey string) RiotApiBridge {
 	}
 
 	return &riotAPIBridge{
-		auth:    httptransport.APIKeyAuth("api_key", "query", apiKey),
-		clients: clients,
-		cache:   NewCache(),
+		auth:             httptransport.APIKeyAuth("api_key", "query", apiKey),
+		clients:          clients,
+		cache:            NewCache(),
+		rateLimitedUntil: time.Now(),
 	}
 }
 
-func (api *riotAPIBridge) GetSummonerData(region string, name string, refresh bool) (*models.Summoner, error) {
+func (api *riotAPIBridge) GetSummonerData(region string, name string, refresh bool) (*models.Summoner, *models.GatewayError) {
 	urlBase, err := api.staticAssetURLBase(region)
 	if err != nil {
-		return nil, err
+		return nil, api.inferGatewayError(err)
 	}
 
 	champions, err := api.getChampions(region, urlBase)
 	if err != nil {
-		return nil, err
+		return nil, api.inferGatewayError(err)
 	}
 
 	summoner, err := api.getSummoner(region, name, urlBase)
 	if err != nil {
-		return nil, err
+		return nil, api.inferGatewayError(err)
 	}
 
 	api.fillMasteries(region, *summoner.ID, champions)
 	if err != nil {
-		return nil, err
+		return nil, api.inferGatewayError(err)
 	}
 
 	for _, champ := range champions {
@@ -84,6 +88,10 @@ func (api *riotAPIBridge) GetSummonerData(region string, name string, refresh bo
 
 func (api *riotAPIBridge) getChampions(region string, iconURLBase string) (map[int64]*models.ChampionMastery, error) {
 	data, err := api.cache.GetOrSet(fmt.Sprintf("championList-%s", region), 24*time.Hour, func() (interface{}, error) {
+		if api.isRateLimited() {
+			return nil, errRateLimited
+		}
+
 		params := clientops.NewGetChampionDataParams().WithRegion(region)
 		resp, err := client.Default.Operations.GetChampionData(params, api.auth)
 
@@ -118,6 +126,10 @@ func (api *riotAPIBridge) getChampions(region string, iconURLBase string) (map[i
 
 func (api *riotAPIBridge) getSummoner(region string, name string, urlBase string) (*models.Summoner, error) {
 	data, err := api.cache.GetOrSet(fmt.Sprintf("summoner-%s-%s", region, name), 5*24*time.Hour, func() (interface{}, error) {
+		if api.isRateLimited() {
+			return nil, errRateLimited
+		}
+
 		params := clientops.NewGetSummonerProfileParams().WithSummonerNames(name).WithRegion(region)
 		resp, err := api.clientFor(region).Operations.GetSummonerProfile(params, api.auth)
 
@@ -152,6 +164,10 @@ func (api *riotAPIBridge) getSummoner(region string, name string, urlBase string
 func (api *riotAPIBridge) fillMasteries(region string, summonerID int64, champions map[int64]*models.ChampionMastery) error {
 	platformID := regionToPlatformID(region)
 	data, err := api.cache.GetOrSet(fmt.Sprintf("masteries-%s-%d", platformID, summonerID), 3*time.Hour, func() (interface{}, error) {
+		if api.isRateLimited() {
+			return nil, errRateLimited
+		}
+
 		params := clientops.NewGetSummonerChampionMasteryParams().WithSummonerID(summonerID).WithPlatformID(platformID)
 		resp, err := api.clientFor(region).Operations.GetSummonerChampionMastery(params, api.auth)
 
@@ -183,6 +199,10 @@ func (api *riotAPIBridge) fillMasteries(region string, summonerID int64, champio
 
 func (api *riotAPIBridge) staticAssetURLBase(region string) (string, error) {
 	data, err := api.cache.GetOrSet(fmt.Sprintf("staticAssetURL"), 24*time.Hour, func() (interface{}, error) {
+		if api.isRateLimited() {
+			return nil, errRateLimited
+		}
+
 		params := clientops.NewGetStaticAssetVersionsParams().WithRegion(region)
 		resp, err := client.Default.Operations.GetStaticAssetVersions(params, api.auth)
 
@@ -202,6 +222,52 @@ func (api *riotAPIBridge) staticAssetURLBase(region string) (string, error) {
 
 func (api *riotAPIBridge) clientFor(region string) *client.Riot {
 	return api.clients[region] // validated by swagger spec, kinda ghetto but meh
+}
+
+func (api *riotAPIBridge) inferGatewayError(err error) *models.GatewayError {
+	if err == errRateLimited {
+		return createGatewayError(429)
+	}
+
+	// There's no common "Code" attribute on the generated code :|
+	var code int
+
+	switch e := err.(type) {
+	// 429s, can't group into single case because they aren't the same type
+	case *clientops.GetChampionDataTooManyRequests:
+		code = api.setRateLimit(e.RetryAfter)
+	case *clientops.GetSummonerChampionMasteryTooManyRequests:
+		code = api.setRateLimit(e.RetryAfter)
+	case *clientops.GetStaticAssetVersionsTooManyRequests:
+		code = api.setRateLimit(e.RetryAfter)
+	case *clientops.GetSummonerProfileTooManyRequests:
+		code = api.setRateLimit(e.RetryAfter)
+	case
+		*clientops.GetSummonerChampionMasteryNotFound,
+		*clientops.GetSummonerProfileNotFound:
+
+		code = 404
+	default:
+		code = 500
+	}
+
+	return createGatewayError(code)
+}
+
+func (api *riotAPIBridge) isRateLimited() bool {
+	return api.rateLimitedUntil.After(time.Now())
+}
+
+func (api *riotAPIBridge) setRateLimit(retryAfter int32) int {
+	api.rateLimitedUntil = time.Now().Add(time.Duration(retryAfter) * time.Second)
+	return 429
+}
+
+func createGatewayError(code int) *models.GatewayError {
+	c := int32(code)
+	return &models.GatewayError{
+		Code: &c,
+	}
 }
 
 func regionToPlatformID(region string) string {
