@@ -3,7 +3,6 @@ Main Page
 -----------------------------*/
 
 .main-container {
-	background-color: #eaeaea;
 	color: white;
 	font-family: 'PT Sans', sans-serif;
 }
@@ -47,6 +46,11 @@ Home Page
 	text-align: center;
 }
 
+#home-header {
+	background: #eaeaea;
+	padding-bottom: 20px;
+}
+
 #home-img {
 	padding-top: 100px;
 }
@@ -66,33 +70,45 @@ Home Page
 	margin: 0 auto;
 }
 
+#home-intro {
+	color: black;
+	padding-top: 10px;
+}
+
+.home-view {
+	background-color: #9CE4F5;
+}
+
 /*-----------------------------
 Profile Page
 -----------------------------*/
 
+.profile-view {
+	background-color: #eaeaea;
+}
+
 #profile {
 	font-size: 14pt;
+	background: url(/assets/img/background.jpg) no-repeat fixed;
+	background-size: cover;
 }
 
 #profile-header {
-	padding: 15px 0 30px;
+	padding: 65px 0 15px;
 	background: linear-gradient(#9CE4F5, #2F626F);
 }
 
 #profile-masteries {
-	background:
-			-webkit-linear-gradient(
-					top,
-					rgba(255, 255, 255, 0) 40%,
-					#eaeaea 70%),
-			url(/assets/img/ionia.jpg) repeat-x;
-	background:
-			-moz-linear-gradient(
-					top,
-					rgba(255,255,255,0) 40%,
-					#eaeaea 70%),
-			url(/assets/img/ionia.jpg) repeat-x;
-	height: 100vh;
+	padding-top: 15px;
+}
+
+.profile-loader {
+	line-height: 0;
+}
+
+.profile-loader img {
+	width: 100%;
+	height: 5px;
 }
 
 /**--- Nav Bar ---*/
@@ -108,12 +124,6 @@ Profile Page
 
 .navbar form {
 	color: black;
-	position: relative;
-	top: 2px;
-}
-
-body {
-	padding-top: 50px;
 }
 
 @media (min-width: 1200px) {

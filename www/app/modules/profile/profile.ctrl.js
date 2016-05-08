@@ -6,10 +6,13 @@ var profileMod = angular.module('lolApp.profile');
 
 profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'profileConst', function($scope, $routeParams, Summoner, profileConst) {
 
+	$scope.loading = true;
+
 	var summonerData = Summoner.get({
 		region: $routeParams.region,
 		summonerName: $routeParams.summonerName
 	}, function() {
+		$scope.loading = false;
 		$scope.masteries = summonerData.champMastery || [];
 		$scope.summoner = {
 			name: summonerData.name,
@@ -53,5 +56,14 @@ profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'prof
 
 	$scope.setSortOrder = function(index) {
 		$scope.selectedSortOrder = $scope.sortOptions[index];
-	}
+	};
+
+	var profileHeight = null;
+	$scope.ensureHeight = function() {
+		if (profileHeight == null) {
+			var profile = document.getElementById('profile');
+			profileHeight = profile.offsetHeight;
+			profile.style.height = profileHeight + 'px';
+		}
+	};
 }]);
