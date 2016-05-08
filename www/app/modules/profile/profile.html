@@ -14,7 +14,7 @@
       </div>
       <div class="collapse navbar-collapse" id="lolchest-nav">
         <form class="navbar-form navbar-left" onsubmit="return false;">
-          <input class="form-control" ng-model="champNameQuery" placeholder="champion name" size="20" ng-change="ensureHeight()">
+          <input class="form-control" ng-model="champNameQuery" placeholder="filter by champion" size="20" ng-change="ensureHeight()">
         </form>
         <ul class="nav navbar-nav navbar-left">
           <li class="dropdown">
@@ -54,11 +54,11 @@
               <img ng-src="{{mastery.champIconUrl}}" title="{{mastery.champName}}">
             </div>
             <div id="chest-icon-container">
-              <img ng-hide="!mastery.chestIsAvailable" src="/assets/img/chest-missing.png" title="No chest for {{mastery.champName}} yet">
-              <img ng-hide="mastery.chestIsAvailable" src="/assets/img/chest-earned.png" title="Chest already earned for {{mastery.champName}}">
+              <img ng-hide="!mastery.chestIsAvailable" src="/assets/img/chest-missing.png" title="Missing chest">
+              <img ng-hide="mastery.chestIsAvailable" src="/assets/img/chest-earned.png" title="Chest already earned!">
             </div>
             <div id="grade-container">
-              <div id="grade-circle">
+              <div id="grade-circle" title="Season's highest grade">
                 {{mastery.highestGrade || '--'}}
               </div>
             </div>

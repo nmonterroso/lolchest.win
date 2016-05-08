@@ -4,7 +4,7 @@ Main Page
 
 .main-container {
 	color: white;
-	font-family: 'PT Sans', sans-serif;
+	font-family: 'Varela Round', sans-serif;
 }
 
 /*-----------------------------
@@ -13,14 +13,14 @@ Shared
 
 .btn-secondary {
 	border-radius: 0;
-	color: black;
+	color: #777;
+	background: #F4DCB0;
 }
 
 .dropdown-item {
 	display: block;
 	padding: 3px 5px;
 	clear: both;
-	font-weight: 400;
 	line-height: 1.5;
 	color: black;
 	text-align: inherit;
@@ -30,8 +30,15 @@ Shared
 }
 
 .dropdown-item:hover {
-	background-color: #f5f5f5;
 	text-decoration: none;
+}
+
+.dropdown-menu {
+	font-size: 13pt;
+}
+
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+	background-color: #F4DCB0;
 }
 
 input {
@@ -89,13 +96,11 @@ Profile Page
 
 #profile {
 	font-size: 14pt;
-	background: url(/assets/img/background.jpg) no-repeat fixed;
-	background-size: cover;
 }
 
 #profile-header {
 	padding: 65px 0 15px;
-	background: linear-gradient(#9CE4F5, #2F626F);
+	background-color: #1A88B4;
 }
 
 #profile-masteries {
@@ -113,6 +118,15 @@ Profile Page
 
 /**--- Nav Bar ---*/
 
+.dropdown, .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+	background: #F4DCB0;
+	color: black;
+}
+
+.navbar-fixed-top {
+	border-bottom: 3px solid #1A88B4;
+}
+
 .navbar-search {
 	width: 450px;
 }
@@ -124,6 +138,10 @@ Profile Page
 
 .navbar form {
 	color: black;
+}
+
+.form-control {
+	font-size: 13pt;
 }
 
 @media (min-width: 1200px) {
@@ -138,7 +156,7 @@ Profile Page
 	}
 }
 
-@media (max-width: 910px) {
+@media (max-width: 964px) {
 	.navbar-header {
 		float: none;
 	}
@@ -237,5 +255,5 @@ Profile Page
 	border: 1px solid darkgoldenrod;
 	font-size: 10pt;
 	text-align: center;
-	vertical-align: middle;
+	padding-top:2px;
 }
