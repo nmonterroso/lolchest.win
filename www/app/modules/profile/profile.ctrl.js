@@ -63,8 +63,7 @@ profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'prof
 		if (profileHeight == null) {
 			var profile = document.getElementById('profile');
 			profileHeight = profile.offsetHeight;
-			console.log("HEIGHT: ", profileHeight);
 			profile.style.height = profileHeight + 'px';
 		}
-	}
+	};
 }]);
