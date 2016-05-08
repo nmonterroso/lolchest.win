@@ -5,7 +5,6 @@ Main Page
 .main-container {
 	color: white;
 	font-family: 'PT Sans', sans-serif;
-	background: #9CE4F5;
 }
 
 /*-----------------------------
@@ -76,9 +75,17 @@ Home Page
 	padding-top: 10px;
 }
 
+.home-view {
+	background-color: #9CE4F5;
+}
+
 /*-----------------------------
 Profile Page
 -----------------------------*/
+
+.profile-view {
+	background-color: #eaeaea;
+}
 
 #profile {
 	font-size: 14pt;
