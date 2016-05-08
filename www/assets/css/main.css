@@ -123,7 +123,7 @@ Profile Page
 	color: black;
 }
 
-.navbar-fixed-top {
+.navbar-default {
 	border-bottom: 3px solid #1A88B4;
 }
 
@@ -156,12 +156,12 @@ Profile Page
 	}
 }
 
-@media (max-width: 964px) {
+@media (max-width: 1000px) {
 	.navbar-header {
 		float: none;
 	}
 	.navbar-left,.navbar-right {
-		float: none !important;
+		/*float: none !important;*/
 	}
 	.navbar-toggle {
 		display: block;
@@ -178,11 +178,11 @@ Profile Page
 		display: none!important;
 	}
 	.navbar-nav {
-		float: none!important;
+		/*float: none!important;*/
 		margin-top: 7.5px;
 	}
 	.navbar-nav>li {
-		float: none;
+		/*float: none;*/
 	}
 	.navbar-nav>li>a {
 		padding-top: 10px;

@@ -24,7 +24,7 @@ profileMod.directive("profileNavBar", function() {
 		templateUrl: '/app/modules/profile/partials/profile-nav-bar.html',
 		link: function() {
 			document.getElementsByClassName('navbar-buffer')[0].style.height =
-				(document.getElementsByClassName('navbar')[0].offsetHeight-1)+'px'
+				(document.getElementsByClassName('navbar')[0].offsetHeight-1)+'px';
 		}
 	};
 });
