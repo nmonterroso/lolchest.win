@@ -20,8 +20,7 @@ profileMod.directive("profileHeader", function() {
 profileMod.directive("profileNavBar", function() {
 	return {
 		restrict: 'E',
-		scope: {
-		},
+		scope: false,
 		templateUrl: '/app/modules/profile/partials/profile-nav-bar.html'
 	};
 });
