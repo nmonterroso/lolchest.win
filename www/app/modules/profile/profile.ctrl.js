@@ -56,5 +56,15 @@ profileMod.controller('ProfileCtrl', ['$scope','$routeParams', 'Summoner', 'prof
 
 	$scope.setSortOrder = function(index) {
 		$scope.selectedSortOrder = $scope.sortOptions[index];
+	};
+
+	var profileHeight = null;
+	$scope.ensureHeight = function() {
+		if (profileHeight == null) {
+			var profile = document.getElementById('profile');
+			profileHeight = profile.offsetHeight;
+			console.log("HEIGHT: ", profileHeight);
+			profile.style.height = profileHeight + 'px';
+		}
 	}
 }]);
