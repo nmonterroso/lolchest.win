@@ -2,7 +2,7 @@
 
 /* Searchbar Directive */
 
-var searchBar = angular.module('lolApp.searchBar');
+var searchBar = angular.module('lolSearchBar');
 
 searchBar.directive("searchBar", ['$location', function($location) {
 	return {

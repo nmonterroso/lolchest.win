@@ -2,9 +2,7 @@
   <div style="float: left"><img src="{{icon}}" /></div>
   <div style="float: left; margin-left: 10px;">
     <h1>{{name}}</h1>
-  </div>
-  <div style="float: right">
-    <h1>{{earnedChests}} / {{totalChests}} chests ({{(100*earnedChests/totalChests | number: 1)}}%)</h1>
+    <h3 style="margin-top: 10px;">{{earnedChests}} of {{totalChests}} chests ({{(100*earnedChests/totalChests | number: 1)}}%)</h3>
   </div>
   <div style="clear: both;"></div>
 </div>

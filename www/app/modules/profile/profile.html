@@ -1,38 +1,11 @@
 <div id="profile">
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#lolchest-nav">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">
-          <img src="/assets/img/chest-key.png" />
-          LoLChest.win
-        </a>
-      </div>
-      <div class="collapse navbar-collapse" id="lolchest-nav">
-        <form class="navbar-form navbar-left" onsubmit="return false;">
-          <input class="form-control" ng-model="champNameQuery" placeholder="champion name" size="20" ng-change="ensureHeight()">
-        </form>
-        <ul class="nav navbar-nav navbar-left">
-          <li class="dropdown">
-            <a href class="dropdown-toggle" data-toggle="dropdown">{{selectedSortOrder.text}} <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li ng-repeat="s in sortOptions">
-                <a href ng-click="setSortOrder($index)">{{s.text}}</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <search-bar class="navbar-search" form-classes="navbar-form navbar-right"></search-bar>
-      </div>
-    </div>
-  </nav>
+
+  <profile-nav-bar></profile-nav-bar>
+
   <div class="profile-loader" ng-show="loading">
     <img src="/assets/img/loading.gif" />
   </div>
+
   <div id="profile-header" ng-show="!loading">
     <div class="container">
       <profile-header name="summoner.name"
@@ -42,6 +15,7 @@
       </profile-header>
     </div>
   </div>
+
   <div id="profile-masteries">
     <div class="container">
       <div class="row">
@@ -54,11 +28,11 @@
               <img ng-src="{{mastery.champIconUrl}}" title="{{mastery.champName}}">
             </div>
             <div id="chest-icon-container">
-              <img ng-hide="!mastery.chestIsAvailable" src="/assets/img/chest-missing.png" title="No chest for {{mastery.champName}} yet">
-              <img ng-hide="mastery.chestIsAvailable" src="/assets/img/chest-earned.png" title="Chest already earned for {{mastery.champName}}">
+              <img ng-hide="!mastery.chestIsAvailable" src="/assets/img/chest-missing.png" title="Missing chest">
+              <img ng-hide="mastery.chestIsAvailable" src="/assets/img/chest-earned.png" title="Chest already earned!">
             </div>
             <div id="grade-container">
-              <div id="grade-circle">
+              <div id="grade-circle" title="Season's highest grade">
                 {{mastery.highestGrade || '--'}}
               </div>
             </div>
