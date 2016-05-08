@@ -126,7 +126,7 @@ rate limit exceeded
 type GetSummonerProfileTooManyRequests struct {
 	/*the number of seconds to wait until retrying
 	 */
-	XRetryAfter int32
+	RetryAfter int32
 }
 
 func (o *GetSummonerProfileTooManyRequests) Error() string {
@@ -135,12 +135,12 @@ func (o *GetSummonerProfileTooManyRequests) Error() string {
 
 func (o *GetSummonerProfileTooManyRequests) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	// response header x-retry-after
-	xRetryAfter, err := swag.ConvertInt32(response.GetHeader("x-retry-after"))
+	// response header retry-after
+	retryAfter, err := swag.ConvertInt32(response.GetHeader("retry-after"))
 	if err != nil {
-		return errors.InvalidType("x-retry-after", "header", "int32", response.GetHeader("x-retry-after"))
+		return errors.InvalidType("retry-after", "header", "int32", response.GetHeader("retry-after"))
 	}
-	o.XRetryAfter = xRetryAfter
+	o.RetryAfter = retryAfter
 
 	return nil
 }

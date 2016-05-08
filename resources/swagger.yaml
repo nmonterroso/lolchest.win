@@ -54,6 +54,8 @@ paths:
           description: unexpected error
         '502':
           description: invalid response from riot api
+          schema:
+            $ref: '#/definitions/GatewayError'
 definitions:
   Summoner:
     type: object
@@ -93,3 +95,11 @@ definitions:
         type: string
       chestIsAvailable:
         type: boolean
+  GatewayError:
+    type: object
+    required:
+      - code
+    properties:
+      code:
+        type: integer
+        format: int32

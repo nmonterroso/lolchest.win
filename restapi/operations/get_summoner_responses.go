@@ -71,6 +71,9 @@ func (o *GetSummonerInternalServerError) WriteResponse(rw http.ResponseWriter, p
 swagger:response getSummonerBadGateway
 */
 type GetSummonerBadGateway struct {
+
+	// In: body
+	Payload *models.GatewayError `json:"body,omitempty"`
 }
 
 // NewGetSummonerBadGateway creates GetSummonerBadGateway with default headers values
@@ -78,8 +81,24 @@ func NewGetSummonerBadGateway() *GetSummonerBadGateway {
 	return &GetSummonerBadGateway{}
 }
 
+// WithPayload adds the payload to the get summoner bad gateway response
+func (o *GetSummonerBadGateway) WithPayload(payload *models.GatewayError) *GetSummonerBadGateway {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the get summoner bad gateway response
+func (o *GetSummonerBadGateway) SetPayload(payload *models.GatewayError) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *GetSummonerBadGateway) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(502)
+	if o.Payload != nil {
+		if err := producer.Produce(rw, o.Payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }

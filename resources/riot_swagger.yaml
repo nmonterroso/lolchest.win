@@ -34,12 +34,7 @@ paths:
           schema:
             $ref: "#/definitions/ChampionListDto"
         '429':
-          description: rate limit exceeded
-          headers:
-            x-retry-after:
-              type: integer
-              format: int32
-              description: the number of seconds to wait until retrying
+          $ref: '#/responses/rateLimit'
         '500':
           description: internal server error
         '503':
@@ -64,12 +59,7 @@ paths:
             items:
               type: string
         '429':
-          description: rate limit exceeded
-          headers:
-            x-retry-after:
-              type: integer
-              format: int32
-              description: the number of seconds to wait until retrying
+          $ref: '#/responses/rateLimit'
         '500':
           description: internal server error
         '503':
@@ -100,12 +90,7 @@ paths:
         '404':
           description: summoner id or platform id not found
         '429':
-          description: rate limit exceeded
-          headers:
-            x-retry-after:
-              type: integer
-              format: int32
-              description: the number of seconds to wait until retrying
+          $ref: '#/responses/rateLimit'
         '500':
           description: internal server error
         '503':
@@ -137,12 +122,7 @@ paths:
         '404':
           description: summoner id or platform id not found
         '429':
-          description: rate limit exceeded
-          headers:
-            x-retry-after:
-              type: integer
-              format: int32
-              description: the number of seconds to wait until retrying
+          $ref: '#/responses/rateLimit'
         '500':
           description: internal server error
 securityDefinitions:
@@ -152,6 +132,14 @@ securityDefinitions:
     in: query
 security:
   - apiKey: []
+responses:
+  rateLimit:
+    description: rate limit exceeded
+    headers:
+      retry-after:
+        type: integer
+        format: int32
+        description: the number of seconds to wait until retrying
 definitions:
   ChampionListDto:
     type: object

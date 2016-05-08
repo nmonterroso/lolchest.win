@@ -1,9 +1,6 @@
 package operations
 
 import (
-	"fmt"
-
-	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/nmonterroso/lolchest.win/riotapi"
 )
@@ -27,13 +24,11 @@ func (h *getSummonerHandler) Handle(params GetSummonerParams) middleware.Respond
 	summonerData, err := h.bridge.GetSummonerData(params.Region, params.Name, refresh)
 
 	if err != nil {
-		switch e := err.(type) {
-		case *runtime.APIError:
-			fmt.Println(fmt.Sprintf("%s(%s, %s) - %d", e.OperationName, params.Region, params.Name, e.Code))
+		switch *err.Code {
+		case 500:
 			return NewGetSummonerInternalServerError()
 		default:
-			fmt.Println(fmt.Sprintf("%s (%s, %s)", e.Error(), params.Region, params.Name))
-			return NewGetSummonerBadGateway()
+			return NewGetSummonerBadGateway().WithPayload(err)
 		}
 	}
 
