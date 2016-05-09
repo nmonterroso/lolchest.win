@@ -7,8 +7,8 @@ var profileMod = angular.module('lolApp.profile');
 profileMod.controller(
 	'ProfileCtrl', 
 	[
-		'$location', '$scope','$routeParams', 'Summoner', 'profileConst',
-		function($location, $scope, $routeParams, Summoner, profileConst) {
+		'$location', '$scope','$routeParams', 'Summoner', 'profileConst', 'searchBarConst',
+		function($location, $scope, $routeParams, Summoner, profileConst, searchBarConst) {
 
 			$scope.loading = true;
 
@@ -36,11 +36,20 @@ profileMod.controller(
 
 				var code = resp.data.code || 500;
 				var params = null;
+				var regionObj = null;
+				var regionName = null;
+
 				switch (code) {
 					case 404:
+						regionObj = searchBarConst.getRegionObjFromLowerTag($routeParams.region);
+						if (regionObj) {
+							regionName = regionObj.name;
+						}
 						params = {
 							type: 'summoner_not_found',
-							name: $routeParams.summonerName
+							name: $routeParams.summonerName,
+							region: $routeParams.region,
+							regionName: regionName
 						};
 						break;
 				}

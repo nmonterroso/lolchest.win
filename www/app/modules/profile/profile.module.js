@@ -8,7 +8,7 @@ profileMod.constant('profileConst', {
 	'sortTypeChamp': 'champ',
 	'sortTypeGrade': 'grade',
 	'sortTypeChest': 'chest',
-	'gradeOrder': ['S+', 'S', 'S-', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', undefined] // TODO: move grade order elsewhere?
+	'gradeOrder': ['S+', 'S', 'S-', 'A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', undefined]
 });
 
 profileMod.config(['$routeProvider',
