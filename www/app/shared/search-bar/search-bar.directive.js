@@ -8,7 +8,8 @@ searchBar.directive("searchBar", ['$window', '$location', function($window, $loc
 	return {
 		restrict: 'E',
 		scope: {
-			formClasses: "@"
+			formClasses: "@",
+			allowInlineBypass: "="
 		},
 		templateUrl: '/app/shared/search-bar/search-bar.html',
 		link: function(scope) {
