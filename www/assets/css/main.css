@@ -45,6 +45,10 @@ input {
 	padding: 0 10px;
 }
 
+p {
+	font-size: medium;
+}
+
 /*-----------------------------
 Home Page
 -----------------------------*/
@@ -58,7 +62,7 @@ Home Page
 	padding-bottom: 20px;
 }
 
-#home-img {
+#home-text-logo {
 	padding-top: 100px;
 }
 
@@ -133,7 +137,6 @@ Profile Page
 
 .navbar-brand img {
 	display: inline;
-	width: 40px;
 }
 
 .navbar form {
@@ -227,13 +230,13 @@ Profile Page
 #chest-icon-container {
 	position: absolute;
 	/*left: 6px;*/
-	right: 36px;
-	bottom: 3px;
+	right: 34px;
+	bottom: 4px;
 }
 
 #chest-icon-container img {
-	width: 130%;
-	height: 130%;
+	width: 120%;
+	height: 120%;
 }
 
 /**--- Grade ---*/
