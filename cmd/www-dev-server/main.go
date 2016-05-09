@@ -12,6 +12,7 @@ var staticPrefixes = []string{
 	"/assets/",
 	"/app/",
 	"/bower_components/",
+	"/bootstrap",
 }
 
 func main() {
