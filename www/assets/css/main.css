@@ -116,6 +116,13 @@ Profile Page
 	height: 5px;
 }
 
+/*-----------------------------
+Error Page
+-----------------------------*/
+.error-view {
+	background-color: #9CE4F5;
+}
+
 /**--- Nav Bar ---*/
 
 .dropdown, .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
