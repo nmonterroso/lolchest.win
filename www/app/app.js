@@ -2,18 +2,19 @@
 
 /* App Module */
 
-var lolApp = angular.module('lolApp', ['ngRoute', 'lolFilters', 'lolSearchBar', 'lolApp.profile', 'lolApp.home']);
+var lolApp = angular.module('lolApp', ['ngRoute', 'lolFilters', 'lolSearchBar', 'lolApp.profile', 'lolApp.home', 'lolApp.error']);
 
 lolApp.config(['$locationProvider', '$routeProvider',
 	function($locationProvider, $routeProvider) {
 		$locationProvider.html5Mode(true);
 
 		$routeProvider
-			.when('/404', {
-				templateUrl: 'app/shared/404.html'
+			.when('/error', {
+				templateUrl: 'app/shared/error/error.html',
+				controller: 'ErrorCtrl'
 			})
 			.otherwise({
-				redirectTo: '/404'
+				redirectTo: '/'
 			});
 	}]);
 
@@ -25,6 +26,9 @@ lolApp.controller('AppController', ['$rootScope', function($rootScope) {
 				break;
 			case 'app/modules/profile/profile.html':
 				$rootScope.bodyClass = 'profile-view';
+				break;
+			case 'app/shared/error/error.html':
+				$rootScope.bodyClass = 'error-view';
 				break;
 		}
 	});

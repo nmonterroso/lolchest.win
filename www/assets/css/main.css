@@ -121,6 +121,13 @@ Profile Page
 	height: 5px;
 }
 
+/*-----------------------------
+Error Page
+-----------------------------*/
+.error-view {
+	background-color: #1A88B4;
+}
+
 @media (max-width: 500px) {
 	h3 {
 		font-size: 12pt;
