@@ -96,6 +96,25 @@ Home Page
 	padding-top: 10px;
 }
 
+#home-intro h2 {
+	font-size: 	x-large;
+}
+
+#home-intro p {
+	font-size: large;
+	text-align: left;
+}
+
+@media (max-width: 950px) {
+	#home-intro h2 {
+		font-size: 30pt;
+	}
+
+	#home-intro p {
+		font-size: 25pt;
+	}
+}
+
 .home-view {
 	background-color: #1A88B4;
 }
