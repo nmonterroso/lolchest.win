@@ -9,8 +9,7 @@
   "keywords": [
     "git",
     "angular",
-    "bower",
-    "bootstrap"
+    "bower"
   ],
   "license": "MIT",
   "ignore": [
@@ -22,7 +21,6 @@
   ],
   "dependencies": {
     "angular": "~1.5.5",
-    "bootstrap": "~3.3.6",
     "jquery": "~2.2.3",
     "angular-route": "~1.5.5",
     "angular-resource": "~1.5.5"
