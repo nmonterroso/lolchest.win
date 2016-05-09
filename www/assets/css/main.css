@@ -52,6 +52,13 @@ p {
 }
 
 /*-----------------------------
+Error Page
+-----------------------------*/
+.error-view {
+	background-color: #1A88B4;
+}
+
+/*-----------------------------
 Home Page
 -----------------------------*/
 
@@ -119,13 +126,6 @@ Profile Page
 .profile-loader img {
 	width: 100%;
 	height: 5px;
-}
-
-/*-----------------------------
-Error Page
------------------------------*/
-.error-view {
-	background-color: #1A88B4;
 }
 
 @media (max-width: 500px) {
