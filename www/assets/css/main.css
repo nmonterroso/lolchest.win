@@ -103,7 +103,7 @@ Profile Page
 }
 
 #profile-header {
-	padding: 65px 0 15px;
+	padding: 15px 0;
 	background-color: #1A88B4;
 }
 
@@ -127,7 +127,7 @@ Profile Page
 	color: black;
 }
 
-.navbar-fixed-top {
+.navbar-default {
 	border-bottom: 3px solid #1A88B4;
 }
 
@@ -159,12 +159,19 @@ Profile Page
 	}
 }
 
-@media (max-width: 964px) {
+@media (max-width: 1000px) {
+	.navbar-title {
+		display: none;
+	}
+}
+
+@media (max-width: 950px) {
+	.navbar-title {
+		display: inline;
+	}
+
 	.navbar-header {
 		float: none;
-	}
-	.navbar-left,.navbar-right {
-		float: none !important;
 	}
 	.navbar-toggle {
 		display: block;
@@ -173,19 +180,11 @@ Profile Page
 		border-top: 1px solid transparent;
 		box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
 	}
-	.navbar-fixed-top {
-		top: 0;
-		border-width: 0 0 1px;
-	}
 	.navbar-collapse.collapse {
 		display: none!important;
 	}
 	.navbar-nav {
-		float: none!important;
-		margin-top: 7.5px;
-	}
-	.navbar-nav>li {
-		float: none;
+		margin-top: 7px;
 	}
 	.navbar-nav>li>a {
 		padding-top: 10px;
