@@ -14,7 +14,7 @@ lolApp.config(['$locationProvider', '$routeProvider',
 				controller: 'ErrorCtrl'
 			})
 			.otherwise({
-				redirectTo: '/error?type=unknown_path'
+				redirectTo: '/'
 			});
 	}]);
 
