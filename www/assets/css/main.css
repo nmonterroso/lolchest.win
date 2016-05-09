@@ -37,6 +37,8 @@ Shared
 
 .dropdown-menu {
 	font-size: 13pt;
+	left: auto;
+	right: 0;
 }
 
 .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
