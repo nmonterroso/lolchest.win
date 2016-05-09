@@ -15,6 +15,8 @@ Shared
 	border-radius: 0;
 	color: #777;
 	background: #F4DCB0;
+	border-top-color: #CCC;
+	border-bottom-color: #CCC;
 }
 
 .dropdown-item {
@@ -125,6 +127,11 @@ Profile Page
 .dropdown, .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
 	background: #F4DCB0;
 	color: black;
+}
+
+.navbar-nav {
+	border-left: 1px solid #CCC;
+	border-right: 1px solid #CCC;
 }
 
 .navbar-default {
