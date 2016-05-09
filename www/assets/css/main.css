@@ -121,6 +121,16 @@ Profile Page
 	height: 5px;
 }
 
+@media (max-width: 500px) {
+	h3 {
+		font-size: 12pt;
+	}
+
+	h1 {
+		font-size: 14pt;
+	}
+}
+
 /**--- Nav Bar ---*/
 
 .dropdown, .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
