@@ -12,7 +12,7 @@ searchBar.directive("searchBar", ['$window', '$location', function($window, $loc
 		},
 		templateUrl: '/app/shared/search-bar/search-bar.html',
 		link: function(scope) {
-			var breakpoint = 934;
+			var breakpoint = 984;
 			scope.navigateTo = function(route) {
 				$location.path(route)
 			};
