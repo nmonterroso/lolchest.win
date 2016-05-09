@@ -58,6 +58,7 @@ profileMod.controller(
 				if (params != null) {
 					$location.search(params);
 				}
+				$location.replace();
 			});
 
 			$scope.sortOptions = [
