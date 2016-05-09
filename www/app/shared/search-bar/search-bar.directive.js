@@ -4,7 +4,7 @@
 
 var searchBar = angular.module('lolSearchBar');
 
-searchBar.directive("searchBar", ['$location', function($location) {
+searchBar.directive("searchBar", ['$window', '$location', function($window, $location) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -12,9 +12,25 @@ searchBar.directive("searchBar", ['$location', function($location) {
 		},
 		templateUrl: '/app/shared/search-bar/search-bar.html',
 		link: function(scope) {
+			var breakpoint = 934;
 			scope.navigateTo = function(route) {
 				$location.path(route)
 			};
+
+			var w = angular.element($window);
+			scope.inlineRegionSelector = w.width() > breakpoint;
+
+			scope.$watch(function() {
+				return w.width();
+			}, function (val, oldVal) {
+				if (oldVal != val) {
+					scope.inlineRegionSelector = val > breakpoint;
+				}
+			});
+
+			w.bind('resize', function() {
+				scope.$apply();
+			});
 		}
 	};
 }]);
