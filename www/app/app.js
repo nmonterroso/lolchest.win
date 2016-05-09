@@ -19,13 +19,22 @@ lolApp.config(['$locationProvider', '$routeProvider',
 	}]);
 
 lolApp.controller('AppController', ['$rootScope', function($rootScope) {
+	// kinda ghetto but we realized this too late :(
+	var setResponsive = function(enabled) {
+		var value = enabled ? 'width=device-width, initial-scale=1': '';
+		document.getElementById('meta-responsive').setAttribute('content', value);
+	};
+
 	$rootScope.$on('$routeChangeSuccess', function (event, currentRoute) {
+		setResponsive(false);
+
 		switch(currentRoute.templateUrl) {
 			case 'app/modules/home/home.html':
 				$rootScope.bodyClass = 'home-view';
 				break;
 			case 'app/modules/profile/profile.html':
 				$rootScope.bodyClass = 'profile-view';
+				setResponsive(true);
 				break;
 			case 'app/shared/error/error.html':
 				$rootScope.bodyClass = 'error-view';
