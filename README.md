@@ -57,3 +57,4 @@ All the code for interacting with the Riot API is in the `riotapi/bridge.go`.
 
 ### Client Development
 The client application is an [AngularJS](https://angularjs.org/) app. The code lives in `www` and consists of two main views: `home` and `profile`.
+
