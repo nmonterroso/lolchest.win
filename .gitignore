@@ -4,6 +4,7 @@
 **.iml
 **.ipr
 **.iws
+.idea/
 
 **/node_modules
 **/bower_components
